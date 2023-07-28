@@ -68,11 +68,12 @@ body {
 .menu-btn {
   display: none;
   float: left;
+  color: #FFFFFF;
 }
 
 .small-menu {
   display: none;
-  background-color: #8E3B46F2;
+  background-color: #532747F2;
   padding: 15px 30px 15px 30px;
   position: fixed;
   right: 0;
@@ -83,12 +84,21 @@ body {
 .main-content {
   height: calc(100vh - 5em);
   overflow-y: auto;
+  padding-bottom: 60px;
+}
+
+.grid-container {
+  padding: 0 30px 0 30px;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
 }
 
 .game-grid {
+  width: 100%;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 15px;
 }
 
 .card:hover {
@@ -112,16 +122,7 @@ body {
   width: 100%;
 }
 
-@media (max-width: 1200px) {
-  .game-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
 @media (max-width: 800px) {
-  .game-grid {
-    grid-template-columns: repeat(1, 1fr);
-  }
 
   .nav-links {
     display: none;
