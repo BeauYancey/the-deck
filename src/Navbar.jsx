@@ -23,9 +23,9 @@ function Navbar() {
         </Link>
         <div className="nav-links">
           <Link to="/games" className="btn">Games</Link>
-          <Link className="btn">Food</Link>
-          <Link className="btn">About</Link>
-          <Link className="btn">Apply</Link>
+          <Link to="/food" className="btn">Food</Link>
+          <Link to="/about" className="btn">About</Link>
+          <Link to="login" className="btn">Admin</Link>
         </div>
         <button className='btn menu-btn' onClick={() => toggleMenu()}>More</button>
       </div>
@@ -33,9 +33,9 @@ function Navbar() {
       <div className='small-menu' onClick={() => toggleMenu()}>
         <div className="nav-links" style={{display: 'flex', flexDirection: 'column'}}>
           <Link to="/games" className="btn">Games</Link>
-          <Link className="btn">Food</Link>
-          <Link className="btn">About</Link>
-          <Link className="btn">Apply</Link>
+          <Link to="/food" className="btn">Food</Link>
+          <Link to="/about" className="btn">About</Link>
+          <Link to="/login" className="btn">Admin</Link>
         </div>
       </div>
       }
