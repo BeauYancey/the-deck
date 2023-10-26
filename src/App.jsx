@@ -1,8 +1,8 @@
-import './App.css';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import Navbar from './Navbar';
 import Home from './Home';
 import Games from './Games';
+import Food from './Food';
 
 function App() {
   return (
@@ -12,8 +12,8 @@ function App() {
         <Routes>
           <Route path='/' exact element={<Home />} />
           <Route path='/games' element={<Games />} />
-          {/* <Route path='/menu' element={<Menu />} />
-          <Route path='/about' element={<About />} />
+          <Route path='/menu' element={<Food />} />
+          {/* <Route path='/about' element={<About />} />
           <Route path='/login' element={<login />} />
           <Route path='/admin' element={<Admin />} /> */}
           <Route path="*" element={<NotFound />} />

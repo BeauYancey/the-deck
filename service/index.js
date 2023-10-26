@@ -61,9 +61,15 @@ apiRouter.get('/user/:email', async (req, res) => {
 
 apiRouter.get('/games', async (req, res) => {
   const games = await DB.getGames();
-  res.setHeader('Content-Type', 'application/json')
+  res.setHeader('Content-Type', 'application/json');
   res.send(games);
 });
+
+apiRouter.get('/food', async (req, res) => {
+  const food = await DB.getFood();
+  res.setHeader('Content-Type', 'application/json');
+  res.send(food);
+})
 
 // secureApiRouter verifies credentials for endpoints
 const secureApiRouter = express.Router();
@@ -85,6 +91,13 @@ secureApiRouter.post('/game', async (req, res) => {
   await DB.addGame(game);
   const games = await DB.getGames();
   res.send(games);
+});
+
+secureApiRouter.post('/food', async (req, res) => {
+  const food = req.body;
+  await DB.addFood(game);
+  const foods = await DB.getFoods();
+  res.send(foods);
 });
 
 // Default error handler

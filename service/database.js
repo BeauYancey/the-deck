@@ -8,6 +8,7 @@ const client = new MongoClient(url);
 const db = client.db('GameChanger');
 const gameCollection = db.collection('BoardGames');
 const empCollection = db.collection("Employees");
+const foodCollection = db.collection("Food");
 
 // This will asynchronously test the connection and exit the process if it fails
 (async function testConnection() {
@@ -52,10 +53,21 @@ function getGames() {
   return cursor.toArray()
 }
 
+function addFood(food) {
+  foodCollection.insertOne(food)
+}
+
+function getFood() {
+  const cursor = foodCollection.find()
+  return cursor.toArray()
+}
+
 module.exports = {
   getEmp,
   getEmpByToken,
   createEmp,
   addGame,
-  getGames
+  getGames,
+  getFood,
+  addFood
 };
