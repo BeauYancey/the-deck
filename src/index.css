@@ -84,12 +84,11 @@ body {
 .main-content {
   height: calc(100vh - 5em);
   overflow-y: auto;
-  padding-bottom: 60px;
 }
 
 .banner-image {
   width: 100vw;
-  height: 22em;
+  height: 25vw;
   object-fit: cover;
   object-position: 50% 40%;
 }
@@ -101,7 +100,7 @@ body {
 
 .grid-container {
   padding: 0 30px 0 30px;
-  width: 100vw;
+  width: 100%;
   display: flex;
   justify-content: center;
 }
@@ -140,6 +139,73 @@ body {
   width: 100%;
 }
 
+.authenticated > div {
+  margin-top: 1em;
+}
+
+.authenticated > div:not(.dock) {
+  margin-top: 2em;
+}
+
+.unauthenticated {
+  padding: 1em;
+  padding-top: 4em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+input::placeholder {
+  color: #b0b0b0!important;
+}
+
+textarea::placeholder {
+  color: #b0b0b0!important;
+}
+
+.input-group .form-control {
+  border-top-right-radius: .375rem!important;
+  border-bottom-right-radius: .375rem!important;
+}
+
+.form-horizontal .input-group {
+  width: 11.5em;
+}
+
+.unauthenticated .input-group {
+  width: 30vw;
+}
+
+.unauthenticated .input-group span {
+  width: 5.75em;
+  text-align: right;
+}
+
+.unauthenticated .btn {
+  width: fit-content;
+}
+
+.authenticated {
+  display: flex;
+}
+
+.authenticated .dock {
+  background-color: #532747;
+  padding: 1em;
+  height: calc(100vh - 5em);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-right: 2em;;
+  margin-top: 0;
+}
+
+.authenticated .dock a {
+  text-decoration: none;
+  color: #FFFFFF;
+  padding: 1em;
+}
+
 @media (max-width: 800px) {
 
   .nav-links {
@@ -152,5 +218,13 @@ body {
 
   .small-menu {
     display: block;
+  }
+
+  .banner-image {
+    height: 200px;
+  }
+
+  .unauthenticated .input-group {
+    width: 240px;
   }
 }

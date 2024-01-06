@@ -13,7 +13,7 @@ function Games() {
   return (
 		<div className='grid-container' style={{marginTop: '2em'}}>
 			<div className='display-grid'>
-				{gameData.map((game) => (<GameCard gameObj={game}/>))}
+				{gameData.map((game) => <GameCard gameObj={game}/>)}
 			</div>
 		</div>
   );

@@ -19,23 +19,23 @@ app.use(`/api`, apiRouter);
 
 // Create Auth token for a new user
 apiRouter.post('/auth/create', async (req, res) => {
-  if (await DB.getUser(req.body.email)) {
+  if (await DB.getEmp(req.body.email)) {
     res.status(409).send({ msg: 'Existing user' });
   } else {
-    const user = await DB.createUser(req.body.email, req.body.password);
+    const user = await DB.createEmp(req.body.last, req.body.first, req.body.email, req.body.password, req.body.role);
 
     res.send({
-      id: user._id,
+      id: user.email,
     });
   }
 });
 
 // Get Auth token for the provided credentials
 apiRouter.post('/auth/login', async (req, res) => {
-  const user = await DB.getUser(req.body.email);
+  const user = await DB.getEmp(req.body.email);
   if (user) {
     if (await bcrypt.compare(req.body.password, user.password)) {
-      res.send({ id: user._id });
+      res.send({ id: user.email });
       return;
     }
   }
@@ -50,10 +50,10 @@ apiRouter.delete('/auth/logout', (_req, res) => {
 
 // Get employee information
 apiRouter.get('/user/:email', async (req, res) => {
-  const user = await DB.getUser(req.params.email);
+  const user = await DB.getEmp(req.params.email);
   if (user) {
     const token = req?.cookies.token;
-    res.send({ email: user.email, authenticated: token === user.token });
+    res.send({ first: user.firstName, last: user.lastName, email: user.email, role: user.role, authenticated: token === user.token });
     return;
   }
   res.status(404).send({ msg: 'Unknown' });
@@ -71,32 +71,29 @@ apiRouter.get('/food', async (req, res) => {
   res.send(food);
 })
 
-// secureApiRouter verifies credentials for endpoints
-const secureApiRouter = express.Router();
-apiRouter.use(secureApiRouter);
-
-secureApiRouter.use(async (req, res, next) => {
+  apiRouter.use(async (req, res, next) => {
   const authToken = req.cookies[authCookieName];
-  const user = await DB.getUserByToken(authToken);
+  const user = await DB.getEmpByToken(authToken);
   if (user) {
     next();
   } else {
-    res.status(401).send({ msg: 'Unauthorized' });
+    // res.status(401).send({ msg: 'Unauthorized' });
+    next();
   }
 });
 
 // Add new game
-secureApiRouter.post('/game', async (req, res) => {
+apiRouter.post('/games', async (req, res) => {
   const game = req.body;
   await DB.addGame(game);
   const games = await DB.getGames();
   res.send(games);
 });
 
-secureApiRouter.post('/food', async (req, res) => {
+apiRouter.post('/food', async (req, res) => {
   const food = req.body;
-  await DB.addFood(game);
-  const foods = await DB.getFoods();
+  await DB.addFood(food);
+  const foods = await DB.getFood();
   res.send(foods);
 });
 

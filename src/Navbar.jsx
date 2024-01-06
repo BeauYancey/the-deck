@@ -11,8 +11,6 @@ function Navbar() {
     } else {
       setMenuDisplay(true);
     }
-
-    console.log(menuDisplay);
   }
 
   return (
@@ -25,7 +23,7 @@ function Navbar() {
           <Link to="/games" className="btn">Games</Link>
           <Link to="/menu" className="btn">Food</Link>
           <Link to="/about" className="btn">About</Link>
-          <Link to="login" className="btn">Admin</Link>
+          <Link to="/auth" className="btn">Admin</Link>
         </div>
         <button className='btn menu-btn' onClick={() => toggleMenu()}>More</button>
       </div>
@@ -35,7 +33,7 @@ function Navbar() {
           <Link to="/games" className="btn">Games</Link>
           <Link to="/menu" className="btn">Food</Link>
           <Link to="/about" className="btn">About</Link>
-          <Link to="/login" className="btn">Admin</Link>
+          <Link to="/auth" className="btn">Admin</Link>
         </div>
       </div>
       }

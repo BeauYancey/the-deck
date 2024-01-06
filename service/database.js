@@ -28,7 +28,7 @@ function getEmpByToken(token) {
   return empCollection.findOne({ token: token });
 }
   
-async function createEmp(lastName, firstName, email, password) {
+async function createEmp(lastName, firstName, email, password, role) {
   // Hash the password before we insert it into the database
   const passwordHash = await bcrypt.hash(password, 10);
   
@@ -37,6 +37,7 @@ async function createEmp(lastName, firstName, email, password) {
     firstName: firstName,
     email: email,
     password: passwordHash,
+    role: role,
     token: uuid.v4(),
   };
   await empCollection.insertOne(employee);
