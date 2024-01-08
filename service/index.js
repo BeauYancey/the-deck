@@ -17,24 +17,12 @@ app.set('trust proxy', true);
 const apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
-// Create Auth token for a new user
-apiRouter.post('/auth/create', async (req, res) => {
-  if (await DB.getEmp(req.body.email)) {
-    res.status(409).send({ msg: 'Existing user' });
-  } else {
-    const user = await DB.createEmp(req.body.last, req.body.first, req.body.email, req.body.password, req.body.role);
-
-    res.send({
-      id: user.email,
-    });
-  }
-});
-
 // Get Auth token for the provided credentials
 apiRouter.post('/auth/login', async (req, res) => {
   const user = await DB.getEmp(req.body.email);
   if (user) {
     if (await bcrypt.compare(req.body.password, user.password)) {
+      setAuthCookie(res, user.token)
       res.send({ id: user.email });
       return;
     }
@@ -46,17 +34,6 @@ apiRouter.post('/auth/login', async (req, res) => {
 apiRouter.delete('/auth/logout', (_req, res) => {
   res.clearCookie(authCookieName);
   res.status(204).end();
-});
-
-// Get employee information
-apiRouter.get('/user/:email', async (req, res) => {
-  const user = await DB.getEmp(req.params.email);
-  if (user) {
-    const token = req?.cookies.token;
-    res.send({ first: user.firstName, last: user.lastName, email: user.email, role: user.role, authenticated: token === user.token });
-    return;
-  }
-  res.status(404).send({ msg: 'Unknown' });
 });
 
 apiRouter.get('/games', async (req, res) => {
@@ -71,26 +48,52 @@ apiRouter.get('/food', async (req, res) => {
   res.send(food);
 })
 
-  apiRouter.use(async (req, res, next) => {
+const secureApiRouter = express.Router();
+apiRouter.use(secureApiRouter);
+
+secureApiRouter.use(async (req, res, next) => {
   const authToken = req.cookies[authCookieName];
   const user = await DB.getEmpByToken(authToken);
   if (user) {
     next();
   } else {
-    // res.status(401).send({ msg: 'Unauthorized' });
-    next();
+    res.status(401).send({ msg: 'Unauthorized' });
+  }
+});
+
+// Get employee information
+secureApiRouter.get('/user/:email', async (req, res) => {
+  const user = await DB.getEmp(req.params.email);
+  if (user) {
+    const token = req?.cookies.token;
+    res.send({ first: user.firstName, last: user.lastName, email: user.email, role: user.role, authenticated: token === user.token });
+    return;
+  }
+  res.status(404).send({ msg: 'Unknown' });
+});
+
+// Create a new user
+secureApiRouter.post('/auth/create', async (req, res) => {
+  if (await DB.getEmp(req.body.email)) {
+    res.status(409).send({ msg: 'Existing user' });
+  } else {
+    const user = await DB.createEmp(req.body.last, req.body.first, req.body.email, req.body.password, req.body.role);
+    res.send({
+      id: user.email,
+    });
   }
 });
 
 // Add new game
-apiRouter.post('/games', async (req, res) => {
+secureApiRouter.post('/games', async (req, res) => {
   const game = req.body;
   await DB.addGame(game);
   const games = await DB.getGames();
   res.send(games);
 });
 
-apiRouter.post('/food', async (req, res) => {
+// Add new food
+secureApiRouter.post('/food', async (req, res) => {
   const food = req.body;
   await DB.addFood(food);
   const foods = await DB.getFood();
@@ -106,6 +109,14 @@ app.use(function (err, req, res, next) {
 app.use((_req, res) => {
   res.sendFile('index.html', { root: 'build' });
 });
+
+function setAuthCookie(res, authToken) {
+  res.cookie(authCookieName, authToken, {
+    secure: true,
+    httpOnly: true,
+    sameSite: 'strict',
+  });
+}
 
 const httpService = app.listen(port, () => {
   console.log(`Listening on port ${port}`);
