@@ -14,7 +14,21 @@ function NewFood() {
     document.querySelector('.input-group textarea').value = null;
   }
 
+  function validateFood() {
+    if (name && img && description && price && price > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   async function addFood() {
+    if (!validateFood()) {
+      console.log("Unable to validate the food item");
+      setDisplayError(true);
+      return;
+    }
+
     const response = await fetch('/api/food', {
       method: 'post',
       body: JSON.stringify(
