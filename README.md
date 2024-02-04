@@ -1,8 +1,13 @@
 #  Game Changer Board Game Cafe
 
 ### To Do
+- Filter games (by time/# of players)
 - Only add new games/foods if they do not already exist
 - Delete games/foods
+- Calendar of events (on the homepage)
+- Link to external reservation service (on the homepage)
+- Edit games/foods
+
 
 ***
 
