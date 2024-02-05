@@ -6,14 +6,15 @@ const DB = require('./database.js');
 
 const authCookieName = "token";
 
-const port = 8080;
-
+// Use port 8080 for the backend unless specified on the command line
+const port = process.argv.length > 2 ? process.argv[2] : 8080;
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static('build'));
 app.set('trust proxy', true);
 
+// Create an api router that uses the /api path
 const apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
@@ -36,21 +37,25 @@ apiRouter.delete('/auth/logout', (_req, res) => {
   res.status(204).end();
 });
 
+// Get a list of games from the /api/games endpoint
 apiRouter.get('/games', async (req, res) => {
   const games = await DB.getGames();
   res.setHeader('Content-Type', 'application/json');
   res.send(games);
 });
 
+// Get a list of food from the /api/food endpoint
 apiRouter.get('/food', async (req, res) => {
   const food = await DB.getFood();
   res.setHeader('Content-Type', 'application/json');
   res.send(food);
 })
 
+// Create a secure api router that uses the /api path
 const secureApiRouter = express.Router();
 apiRouter.use(secureApiRouter);
 
+// Require the user to be logged in to access any endpoints after this point in the code
 secureApiRouter.use(async (req, res, next) => {
   const authToken = req.cookies[authCookieName];
   const user = await DB.getEmpByToken(authToken);
@@ -61,7 +66,7 @@ secureApiRouter.use(async (req, res, next) => {
   }
 });
 
-// Get employee information
+// Get employee information from the /api/user/:email path
 secureApiRouter.get('/user/:email', async (req, res) => {
   const user = await DB.getEmp(req.params.email);
   if (user) {
@@ -72,7 +77,7 @@ secureApiRouter.get('/user/:email', async (req, res) => {
   res.status(404).send({ msg: 'Unknown' });
 });
 
-// Create a new user
+// Create a new user at the /api/auth/create endpoint
 secureApiRouter.post('/auth/create', async (req, res) => {
   if (await DB.getEmp(req.body.email)) {
     res.status(409).send({ msg: 'Existing user' });
@@ -84,7 +89,7 @@ secureApiRouter.post('/auth/create', async (req, res) => {
   }
 });
 
-// Add new game
+// Add new game at the /api/games endpoint
 secureApiRouter.post('/games', async (req, res) => {
   const game = req.body;
   await DB.addGame(game);
@@ -92,7 +97,7 @@ secureApiRouter.post('/games', async (req, res) => {
   res.send(games);
 });
 
-// Add new food
+// Add new food at the /api/food endpoint
 secureApiRouter.post('/food', async (req, res) => {
   const food = req.body;
   await DB.addFood(food);
@@ -105,9 +110,9 @@ app.use(function (err, req, res, next) {
   res.status(500).send({ type: err.name, message: err.message });
 });
 
-// Return the application's default page if the path is unknown
+// 404 error if the path is unknown
 app.use((_req, res) => {
-  res.sendFile('index.html', { root: 'build' });
+  res.status(404).send({message: "page not found"});
 });
 
 function setAuthCookie(res, authToken) {

@@ -19,15 +19,16 @@ const foodCollection = db.collection("Food");
   process.exit(1);
 });
 
-
+// Get an employee from the database by their email
 function getEmp(email) {
   return empCollection.findOne({ email: email });
 }
-  
+// Get an employee from the database by their auth cookie
 function getEmpByToken(token) {
   return empCollection.findOne({ token: token });
 }
   
+// Add a new employee to the database
 async function createEmp(lastName, firstName, email, password, role) {
   // Hash the password before we insert it into the database
   const passwordHash = await bcrypt.hash(password, 10);
@@ -45,19 +46,23 @@ async function createEmp(lastName, firstName, email, password, role) {
   return employee;
 }
   
+// Add a new game to the database
 function addGame(game) {
   gameCollection.insertOne(game)
 }
 
+// Get all the games from the database
 function getGames() {
   const cursor = gameCollection.find()
   return cursor.toArray()
 }
 
+// Add a new food item to the database
 function addFood(food) {
   foodCollection.insertOne(food)
 }
 
+// Get all the food items from the database
 function getFood() {
   const cursor = foodCollection.find()
   return cursor.toArray()
