@@ -4,6 +4,8 @@ import Welcome from "./Welcome";
 import NewGame from "./NewGame";
 import NewFood from "./NewFood";
 import CreateUser from "./CreateUser";
+import DeleteGame from "./DeleteGame";
+import DeleteFood from "./DeleteFood";
 
 function Authenticated(props) {
 
@@ -36,6 +38,11 @@ function Authenticated(props) {
         }
         <Link to="add-game">Add Game</Link>
         <Link to="add-food">Add Food</Link>
+        {user.role === "admin" &&
+          <Link to="remove-user">Remove User</Link>
+        }
+        <Link to="delete-game">Delete Game</Link>
+        <Link to="delete-food">Delete Food</Link>
         <div className="btn btn-primary" style={{margin: "1em"}} onClick={() => logout()}>Log Out</div>
       </div>
       <Routes>
@@ -43,6 +50,8 @@ function Authenticated(props) {
         <Route path="add-user" element={<CreateUser />} />
         <Route path="add-game" element={<NewGame />} />
         <Route path="add-food" element={<NewFood />} />
+        <Route path="delete-game" element={<DeleteGame />} />
+        <Route path="delete-food" element={<DeleteFood />} />
         <Route path="*" element={<Welcome />}/>
       </Routes>
     </div>

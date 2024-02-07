@@ -6,10 +6,10 @@
 .pnp.js
 service/node_modules
 service/dbConfig.json
+src/gameData.json
 
 # testing
 /coverage
-src/gameData.json
 
 # production
 service/build

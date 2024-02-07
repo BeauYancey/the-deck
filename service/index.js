@@ -97,10 +97,26 @@ secureApiRouter.post('/games', async (req, res) => {
   res.send(games);
 });
 
+// Delete a game at the /api/games endpoint
+secureApiRouter.delete('/games', async (req, res) => {
+  const game = req.body;
+  await DB.removeGame(game);
+  const games = await DB.getGames();
+  res.send(games);
+});
+
 // Add new food at the /api/food endpoint
 secureApiRouter.post('/food', async (req, res) => {
   const food = req.body;
   await DB.addFood(food);
+  const foods = await DB.getFood();
+  res.send(foods);
+});
+
+//Delete a food item atthe /api/food endpoint
+secureApiRouter.delete('/food', async (req, res) => {
+  const food = req.body;
+  await DB.removeFood(food);
   const foods = await DB.getFood();
   res.send(foods);
 });

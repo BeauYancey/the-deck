@@ -45,10 +45,10 @@ async function createEmp(lastName, firstName, email, password, role) {
 
   return employee;
 }
-  
+
 // Add a new game to the database
-function addGame(game) {
-  gameCollection.insertOne(game)
+async function addGame(game) {
+  await gameCollection.insertOne(game)
 }
 
 // Get all the games from the database
@@ -57,9 +57,13 @@ function getGames() {
   return cursor.toArray()
 }
 
+async function removeGame(game) {
+  await gameCollection.deleteOne(game);
+}
+
 // Add a new food item to the database
-function addFood(food) {
-  foodCollection.insertOne(food)
+async function addFood(food) {
+  await foodCollection.insertOne(food)
 }
 
 // Get all the food items from the database
@@ -68,12 +72,20 @@ function getFood() {
   return cursor.toArray()
 }
 
+
+async function removeFood(food) {
+  await foodCollection.deleteOne(food);
+}
+
 module.exports = {
   getEmp,
   getEmpByToken,
   createEmp,
+  removeEmp,
   addGame,
   getGames,
+  removeGame,
   getFood,
-  addFood
+  addFood,
+  removeFood
 };

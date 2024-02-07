@@ -21,14 +21,14 @@ function NewGame() {
     if (name && img && summary && minPlayers && minPlayers > 0 && maxPlayers && maxPlayers >= minPlayers && time && time > 0 && instructions) {
       return true;
     } else {
-      setDisplayError(true);
       return false;
     }
   }
 
   async function addGame() {
     if (!validateGame()) {
-      console.log("Unable to validate the game")
+      console.log("Unable to validate the game");
+      setDisplayError(true);
       return;
     }
 
