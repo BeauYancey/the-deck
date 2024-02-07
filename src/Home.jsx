@@ -23,7 +23,7 @@ function Home() {
         <h1 style={{paddingBottom: ".5em"}}>Upcoming Events</h1>
         <div className="upcoming-events">
           {events.map(event => (
-            <div style={{padding: "1em 0 1em .5em", borderTop: "solid 2px grey", display: "flex"}}>
+            <div className="item-row">
               <img alt="party" style={{height: "8em", width: "8em", objectFit: "cover"}} src="https://media.npr.org/assets/img/2022/11/04/gettyimages-1183414292-1-_slide-edff8c3fe6afcab5c6457e3c7bd011f5c1745161.jpg" />
               <div style={{paddingLeft: "1em"}}>
                 <h2>{event.name}</h2>

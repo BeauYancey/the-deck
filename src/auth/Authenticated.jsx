@@ -37,12 +37,12 @@ function Authenticated(props) {
           <Link to="add-user">Add User</Link>
         }
         <Link to="add-game">Add Game</Link>
-        <Link to="add-food">Add Food</Link>
+        <Link to="add-food" style={{borderBottom: "1px solid white"}}>Add Food</Link>
         {user.role === "admin" &&
           <Link to="remove-user">Remove User</Link>
         }
         <Link to="delete-game">Delete Game</Link>
-        <Link to="delete-food">Delete Food</Link>
+        <Link to="delete-food" style={{borderBottom: "1px solid white"}}>Delete Food</Link>
         <div className="btn btn-primary" style={{margin: "1em"}} onClick={() => logout()}>Log Out</div>
       </div>
       <Routes>

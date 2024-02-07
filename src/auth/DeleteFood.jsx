@@ -30,8 +30,8 @@ function DeleteFood() {
     <div className="delete-item">
       {foods.map((food) => (
         <div className="item-row" style={{justifyContent: "space-between", width: "40vw"}}>
-          <h4>{food.name}</h4>
-          <div className="btn btn-secondary" onClick={() => {if (confirmDelete(food.name)){
+          <h5>{food.name}</h5>
+          <div className="btn btn-warning" onClick={() => {if (confirmDelete(food.name)){
             remove(food.name)}
           }}>Delete</div>
         </div>

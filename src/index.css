@@ -47,7 +47,7 @@ body {
 
 .btn-primary:hover {
   background-color: #E57A44;
-   border: 1px solid #E57A44;
+  border: 1px solid #E57A44;
 }
 
 .btn-primary {
@@ -55,13 +55,26 @@ body {
   border: 1px solid #77AD78;
 }
 
-.nav-links > .btn {
-  font-size: 1.1em;
+.btn-warning {
+  background-color: #E57A44;
+  border: 1px solid #E57A44;
+}
+
+.btn-warning:hover {
+  background-color: #77AD78;
+  border: 1px solid #77AD78;
+}
+
+.btn {
   color: white;
 }
 
-.nav-links > .btn:hover{
-  color: #FFFFFF;
+.btn:hover {
+  color: white;
+}
+
+.nav-links > .btn {
+  font-size: 1.1em;
 }
 
 .nav-links > .btn:active {
@@ -108,21 +121,17 @@ body {
 
 .grid-container {
   padding: 0 30px 0 30px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
 }
 
 .display-grid {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 22em);
-  gap: 15px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
-/* .card {
-  width: 22em;
-} */
+.card {
+  width: 20em;
+  margin: 0.75em;
+}
 
 .card:hover {
   box-shadow: 3px 2px 5px #CDCDCD99;
@@ -132,12 +141,14 @@ body {
 /* REMOVE THIS WHEN ALL IMAGES ARE CONSISTENT SIZE */
 .card-img-top {
   height: 12em;
+  width: 20em;
   object-fit: cover;
   object-position: 50% 50%;
 }
 
 .card-text {
   height: 120px;
+  text-wrap: wrap;
 }
 
 .ftr {
@@ -214,6 +225,11 @@ textarea::placeholder {
   padding: 1em 0 1em .5em;
   border-top: solid 2px grey;
   display: flex;
+  align-items: center;
+}
+
+.item-row > h5{
+  margin-bottom: 0;
 }
 
 @media (max-width: 800px) {
