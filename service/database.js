@@ -53,7 +53,7 @@ async function addGame(game) {
 
 // Get all the games from the database
 function getGames() {
-  const cursor = gameCollection.find()
+  const cursor = gameCollection.find().sort({"name": 1})
   return cursor.toArray()
 }
 
@@ -68,7 +68,7 @@ async function addFood(food) {
 
 // Get all the food items from the database
 function getFood() {
-  const cursor = foodCollection.find()
+  const cursor = foodCollection.find().sort({"name": 1})
   return cursor.toArray()
 }
 
@@ -81,7 +81,6 @@ module.exports = {
   getEmp,
   getEmpByToken,
   createEmp,
-  removeEmp,
   addGame,
   getGames,
   removeGame,
