@@ -46,9 +46,9 @@ async function createEmp(lastName, firstName, email, password, role) {
   return employee;
 }
 
-// Add a new game to the database
+// Add a new game to the database if there is not already a game with the same name
 async function addGame(game) {
-  await gameCollection.insertOne(game)
+  await gameCollection.updateOne({name: game.name}, {$setOnInsert: game}, {upsert: true})
 }
 
 // Get all the games from the database
@@ -61,9 +61,9 @@ async function removeGame(game) {
   await gameCollection.deleteOne(game);
 }
 
-// Add a new food item to the database
+// Add a new food item to the database if there is not already a food with the same name
 async function addFood(food) {
-  await foodCollection.insertOne(food)
+  await foodCollection.updateOne({name: food.name}, {$setOnInsert: food}, {upsert: true})
 }
 
 // Get all the food items from the database

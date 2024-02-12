@@ -52,7 +52,7 @@ function Authenticated(props) {
         <Route path="add-food" element={<NewFood />} />
         <Route path="delete-game" element={<DeleteGame />} />
         <Route path="delete-food" element={<DeleteFood />} />
-        <Route path="*" element={<Welcome />}/>
+        <Route path="*" element={<Welcome name={user.first}/>}/>
       </Routes>
     </div>
   )
