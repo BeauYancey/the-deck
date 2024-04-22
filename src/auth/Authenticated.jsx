@@ -6,6 +6,7 @@ import NewFood from "./NewFood";
 import CreateUser from "./CreateUser";
 import DeleteGame from "./DeleteGame";
 import DeleteFood from "./DeleteFood";
+import DeleteUser from "./DeleteUser";
 
 function Authenticated(props) {
 
@@ -33,12 +34,12 @@ function Authenticated(props) {
   return (
     <div className="authenticated">
       <div className="dock">
-        {user.role === "admin" &&
+        {(user.role === "admin" || user.role ==="super-admin") &&
           <Link to="add-user">Add User</Link>
         }
         <Link to="add-game">Add Game</Link>
         <Link to="add-food" style={{borderBottom: "1px solid white"}}>Add Food</Link>
-        {user.role === "admin" &&
+        {(user.role === "admin" || user.role ==="super-admin") &&
           <Link to="remove-user">Remove User</Link>
         }
         <Link to="delete-game">Delete Game</Link>
@@ -50,6 +51,7 @@ function Authenticated(props) {
         <Route path="add-user" element={<CreateUser />} />
         <Route path="add-game" element={<NewGame />} />
         <Route path="add-food" element={<NewFood />} />
+        <Route path="remove-user" element={<DeleteUser />} />
         <Route path="delete-game" element={<DeleteGame />} />
         <Route path="delete-food" element={<DeleteFood />} />
         <Route path="*" element={<Welcome name={user.first}/>}/>

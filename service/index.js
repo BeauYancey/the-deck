@@ -31,12 +31,6 @@ apiRouter.post('/auth/login', async (req, res) => {
   res.status(401).send({ msg: 'Unauthorized' });
 });
 
-// Delete Auth token if stored in a cookie
-apiRouter.delete('/auth/logout', (_req, res) => {
-  res.clearCookie(authCookieName);
-  res.status(204).end();
-});
-
 // Get a list of games from the /api/games endpoint
 apiRouter.get('/games', async (req, res) => {
   const games = await DB.getGames();
@@ -72,9 +66,35 @@ secureApiRouter.get('/user/:email', async (req, res) => {
   if (user) {
     const token = req?.cookies.token;
     res.send({ first: user.firstName, last: user.lastName, email: user.email, role: user.role, authenticated: token === user.token });
-    return;
   }
-  res.status(404).send({ msg: 'Unknown' });
+  else {
+    res.status(404).send({ msg: 'Unknown' });
+  }
+});
+
+secureApiRouter.get('/user', async (req, res) => {
+  const allUsers = await DB.getAllEmps();
+  const info = allUsers.map((user) => ({last: user.lastName, first: user.firstName, email: user.email}));
+  res.send(info)
+});
+
+secureApiRouter.delete('/user', async (req, res) => {
+  const user = await DB.getEmp(req.body.email);
+  if (user.role !== "super-admin") {
+    await DB.removeUser(user);
+    const allUsers = await DB.getAllEmps();
+    const info = allUsers.map((user) => ({last: user.lastName, first: user.firstName, email: user.email}));
+    res.send(info)
+  }
+  else {
+    res.status(401).send({ msg: 'Unauthorized' })
+  }
+})
+
+// Delete Auth token if stored in a cookie
+secureApiRouter.delete('/auth/logout', (_req, res) => {
+  res.clearCookie(authCookieName);
+  res.status(204).end();
 });
 
 // Create a new user at the /api/auth/create endpoint

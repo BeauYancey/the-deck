@@ -27,6 +27,14 @@ function getEmp(email) {
 function getEmpByToken(token) {
   return empCollection.findOne({ token: token });
 }
+
+function getAllEmps() {
+  return empCollection.find().sort({"firstName": 1}).toArray();
+}
+
+async function removeUser(user) {
+  await empCollection.deleteOne(user);
+}
   
 // Add a new employee to the database
 async function createEmp(lastName, firstName, email, password, role) {
@@ -72,7 +80,6 @@ function getFood() {
   return cursor.toArray()
 }
 
-
 async function removeFood(food) {
   await foodCollection.deleteOne(food);
 }
@@ -81,6 +88,8 @@ module.exports = {
   getEmp,
   getEmpByToken,
   createEmp,
+  getAllEmps,
+  removeUser,
   addGame,
   getGames,
   removeGame,

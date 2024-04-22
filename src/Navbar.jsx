@@ -22,7 +22,7 @@ function Navbar() {
         <div className="nav-links">
           <Link to="/games" className="btn">Games</Link>
           <Link to="/menu" className="btn">Food</Link>
-          <Link to="/about" className="btn">About</Link>
+          <Link to="/about" className="btn">Reservations</Link>
           <Link to="/auth" className="btn">Admin</Link>
         </div>
         <button className='btn menu-btn' onClick={() => toggleMenu()}>More</button>
@@ -32,7 +32,7 @@ function Navbar() {
         <div className="nav-links" style={{display: 'flex', flexDirection: 'column'}}>
           <Link to="/games" className="btn">Games</Link>
           <Link to="/menu" className="btn">Food</Link>
-          <Link to="/about" className="btn">About</Link>
+          <Link to="/about" className="btn">Reservations</Link>
           <Link to="/auth" className="btn">Admin</Link>
         </div>
       </div>

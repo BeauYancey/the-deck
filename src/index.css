@@ -5,6 +5,12 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --grey: #EDEAEB;
+  --yellow: #FFE733;
+  --orange: #FF773D;
+  --purple: #290565;
+
 }
 
 code {
@@ -12,21 +18,16 @@ code {
     monospace;
 }
 
-body {
-  margin: 0;
-}
-
 ::-webkit-scrollbar {
   display: none;
 }
 
 .nav-bar {
-  color: white;
+  color: var(--grey);
   background-color: #532747;
   display: flex;
   padding: 20px;
   height: 5em;
-  box-shadow: 0 2px 5px #3B1C3299;
   justify-content: space-between;
 }
 
