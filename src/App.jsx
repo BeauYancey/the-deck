@@ -1,5 +1,5 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import Home from './Home';
 import Games from './Games';
@@ -9,8 +9,12 @@ import Login from './auth/Login';
 function App() {
 
   const [email, setEmail] = useState(localStorage.getItem('user') || '');
-  const currentAuthState = email ? true : false;
-  const [authState, setAuthState] = useState(currentAuthState);
+  const [authState, setAuthState] = useState(false);
+  useEffect(() => {
+    fetch(`/api/user/${email}`)
+    .then(res => res.json())
+    .then(data => setAuthState(data.authenticated))
+  }, [])
 
   return (
     <BrowserRouter>
