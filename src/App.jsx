@@ -14,7 +14,7 @@ function App() {
     fetch(`/api/user/${email}`)
     .then(res => res.json())
     .then(data => setAuthState(data.authenticated))
-  }, [])
+  }, [email])
 
   return (
     <BrowserRouter>

@@ -1,0 +1,33 @@
+{
+    "games": [
+        "party",
+        "strategy",
+        "cooperative",
+        "puzzle",
+        "card game",
+        "dice game",
+        "role playing",
+        "trivia",
+        "social deduction",
+        "push your luck",
+        "family friendly",
+        "hard to learn",
+        "easy to learn",
+        "speed",
+        "tile laying",
+        "dexterity",
+        "tertris"
+    ],
+    "food": [
+        "gluten free",
+        "vegetarian",
+        "vegan",
+        "halal",
+        "kosher",
+        "dairy free",
+        "contains nuts",
+        "contains bees",
+        "contains soy",
+        "contains eggs"
+    ]
+}
