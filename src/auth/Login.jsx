@@ -4,13 +4,14 @@ import Unauthenticated from "./Unauthenticated";
  function Login({email, authState, onAuthChange}) {
   return (
     <div className="login">
-      {authState === true && (
+      {authState == true ? 
+        (
         <Authenticated 
           email={email} 
           onLogout={() => onAuthChange(email, false)} 
         />
-      )}
-      {authState === false && (
+      ) :
+      (
         <Unauthenticated 
           email={email}
           onLogin={(loginEmail) => {
