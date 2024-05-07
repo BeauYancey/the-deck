@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import GameCard from './GameCard';
+import GameInfo from './GameInfo';
 
 function Games() {
 
   const [players, setPlayers] = useState(0);
   const [time, setTime] = useState(0);
   const [filter, setFilter] = useState({players: null, time: null});
+  const [displayGame, setDisplayGame] = useState(null);
 
 	const[gameData, setGameData] = useState([]);
   useEffect(() => {
@@ -62,8 +64,9 @@ function Games() {
         <div className='btn btn-primary' onClick={() => setFilter({players: players || null, time: time || null})}>Apply Filters</div>
         <div className='btn btn-secondary' onClick={() => resetFilter()}>Reset Filters</div>
       </div>
+      {displayGame && <GameInfo game={displayGame} onClose={() => setDisplayGame(null)}/>}
 			<div className='display-grid'>
-				{gameData.map((game) => passesFilter(game) && <GameCard gameObj={game}/>)}
+				{gameData.map((game) => passesFilter(game) && <GameCard gameObj={game} displayInfo={() => setDisplayGame(game)}/>)}
 			</div>
 		</div>
   );
