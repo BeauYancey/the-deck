@@ -154,7 +154,6 @@ code {
   overflow: hidden;
 }
 
-
 .ftr {
   padding: 15px;
   margin-top: 20px;
@@ -194,7 +193,7 @@ textarea::placeholder {
 .select-tag-options {
   display: flex;
   flex-wrap: wrap;
-  gap: .2em 1em;
+  gap: 1px .5em;
 }
 
 .select-tag {
@@ -229,6 +228,9 @@ textarea::placeholder {
 }
 
 .authenticated .dock {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
   background-color: #532747;
   padding: 1em;
   height: calc(100vh - 5em);

@@ -1,5 +1,6 @@
 import { useState } from "react";
-const allTags = require("./tags.json").games;
+const allGenres = require("./tags.json").genres;
+const allThemes = require("./tags.json").themes;
 
 function NewGame() {
   const [name, setName] = useState('');
@@ -104,14 +105,14 @@ function NewGame() {
         />
       </div>
       <div className='input-group mb-3'>
-        <span className='input-group-text'>Summary</span>
+        <span className='input-group-text'>Summary<br/>{summary.length}/175</span>
         <textarea
           className='form-control'
           type='text'
           onChange={(e) => setSummary(e.target.value)}
           placeholder='Describe the game'
           style={{resize: "none"}}
-          rows="6"
+          rows="3"
           maxLength="175"
         />
       </div>
@@ -157,9 +158,20 @@ function NewGame() {
         />
       </div>
       <div className='input-group mb-3'>
-        <span className='input-group-text'>Tags</span>
+        <span className='input-group-text'>Genres</span>
         <div className='form-control select-tag-options'>
-          {allTags.map((tag) => {
+          {allGenres.map((tag) => {
+            return (
+              <div className='select-tag' id={tag} onClick={() => addRemoveTag(tag)}>
+                {tag}
+              </div>
+            )})}
+        </div>
+      </div>
+      <div className='input-group mb-3'>
+        <span className='input-group-text'>Themes</span>
+        <div className='form-control select-tag-options'>
+          {allThemes.map((tag) => {
             return (
               <div className='select-tag' id={tag} onClick={() => addRemoveTag(tag)}>
                 {tag}

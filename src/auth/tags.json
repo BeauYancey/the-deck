@@ -1,5 +1,5 @@
 {
-    "games": [
+    "genres": [
         "party",
         "strategy",
         "cooperative",
@@ -16,7 +16,27 @@
         "speed",
         "tile laying",
         "dexterity",
-        "tertris"
+        "worker placement"
+    ],
+    "themes" : [
+        "dinosaur",
+        "space",
+        "war",
+        "history",
+        "plants",
+        "western",
+        "letters",
+        "animals",
+        "nature",
+        "fantasy",
+        "city",
+        "pirates",
+        "movie",
+        "food",
+        "trains",
+        "ocean",
+        "christmas",
+        "numbers"
     ],
     "food": [
         "gluten free",
