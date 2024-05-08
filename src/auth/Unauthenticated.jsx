@@ -1,11 +1,13 @@
 import { useState } from "react";
 
 function Unauthenticated(props) {
-  const [email, setEmail] = useState(props.email);
-  const [password, setPassword] = useState('');
   const [displayError, setDisplayError] = useState(false);
 
   async function loginUser() {
+
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
     const response = await fetch(`/api/auth/login`, {
       method: 'post',
       body: JSON.stringify({email: email, password: password}),
@@ -39,8 +41,7 @@ function Unauthenticated(props) {
         <input
           className='form-control'
           type='text'
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          id='email'
           placeholder='example@email.com'
         />
       </div>
@@ -49,7 +50,7 @@ function Unauthenticated(props) {
         <input
           className='form-control'
           type='password'
-          onChange={(e) => setPassword(e.target.value)}
+          id='password'
           placeholder='********'
         />
       </div>

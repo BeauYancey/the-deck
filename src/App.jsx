@@ -1,5 +1,5 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Navbar from './Navbar';
 import Home from './Home';
 import Games from './Games';
@@ -13,7 +13,7 @@ function App() {
   useEffect(() => {
     fetch(`/api/user/${email}`)
     .then(res => res.json())
-    .then(data => setAuthState(data.authenticated))
+    .then(data => setAuthState(data.authenticated));
   }, [email])
 
   return (

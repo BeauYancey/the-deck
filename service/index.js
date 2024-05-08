@@ -27,8 +27,13 @@ apiRouter.post('/auth/login', async (req, res) => {
       res.send({ id: user.email });
       return;
     }
+    else {
+      res.status(401).send({ msg: 'Unauthorized' });
+    }
   }
-  res.status(401).send({ msg: 'Unauthorized' });
+  else {
+    res.status(401).send({ msg: 'Unauthorized' });
+  }
 });
 
 // Get a list of games from the /api/games endpoint
@@ -153,7 +158,7 @@ app.use((_req, res) => {
 
 function setAuthCookie(res, authToken) {
   res.cookie(authCookieName, authToken, {
-    secure: true,
+    // secure: true,
     httpOnly: true,
     sameSite: 'strict',
   });
