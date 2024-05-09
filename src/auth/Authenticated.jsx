@@ -45,8 +45,9 @@ function Authenticated(props) {
         <Link to="delete-game">Delete Game</Link>
         <Link to="delete-food" style={{borderBottom: "1px solid white"}}>Delete Food</Link>
 
+        <Link to="rate-game">Rate Game</Link>
         <Link to="edit-game">Edit Game</Link>
-        <Link to="rate-game" style={{borderBottom: "1px solid white"}}>Rate Game</Link>
+        <Link to="edit-food" style={{borderBottom: "1px solid white"}}>Edit Food</Link>
         <div className="btn btn-primary" style={{margin: "1em"}} onClick={() => logout()}>Log Out</div>
       </div>
       

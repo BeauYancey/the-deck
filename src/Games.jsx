@@ -55,7 +55,7 @@ function Games() {
   }
 
   function passesFilter(game) {
-    if (filter.players == null && filter.time == null && filter.tags.length == 0) {
+    if (filter.players == null && filter.time == null && filter.tags.length === 0) {
       return true;
     }
     if (filter.players != null && (parseInt(game.min) > filter.players || parseInt(game.max) < filter.players)) {
@@ -70,7 +70,7 @@ function Games() {
       console.log(`${game.name} fails on tags -- game has no tags`)
       return false
     }
-    if (filter.tags.length > 0 && (game.tags.filter((tag) => filter.tags.includes(tag)).length == 0)) { // any == 0, all != filter.tags.length, only != game.tags.length
+    if (filter.tags.length > 0 && (game.tags.filter((tag) => filter.tags.includes(tag)).length !== filter.tags.length)) { // any == 0, all != filter.tags.length, only != game.tags.length
       console.log(`${game.name} fails on tags -- ${game.tags} || ${gameTags} = []`)
       return false;
     }

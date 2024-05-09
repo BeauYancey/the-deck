@@ -45,9 +45,8 @@
 		"halal",
 		"kosher",
 		"dairy free",
-		"contains nuts",
-		"contains bees",
-		"contains soy",
-		"contains eggs"
+		"nut free",
+		"soy free",
+		"egg free"
 	]
 }
