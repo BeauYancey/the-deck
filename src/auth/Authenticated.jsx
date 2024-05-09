@@ -1,6 +1,5 @@
 import { Routes, Route, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import Welcome from "./Welcome";
 import NewGame from "./NewGame";
 import NewFood from "./NewFood";
 import CreateUser from "./CreateUser";
@@ -52,14 +51,14 @@ function Authenticated(props) {
       </div>
       
       <Routes>
-        <Route path="/" exact element={<Welcome name={user.first}/>} />
+        <Route path="/" exact element={<CreateUser/>} />
         <Route path="add-user" element={<CreateUser />} />
         <Route path="add-game" element={<NewGame />} />
         <Route path="add-food" element={<NewFood />} />
         <Route path="remove-user" element={<DeleteUser />} />
         <Route path="delete-game" element={<DeleteGame />} />
         <Route path="delete-food" element={<DeleteFood />} />
-        <Route path="*" element={<Welcome name={user.first}/>}/>
+        <Route path="*" element={<CreateUser/>}/>
       </Routes>
     </div>
   )

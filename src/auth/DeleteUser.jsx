@@ -35,7 +35,7 @@ function DeleteUser() {
     return (
         <div className="delete-item">
             {users.map((user) => (
-                <div className="item-row" style={{justifyContent: "space-between", width: "40vw"}}>
+                <div className="item-row admin-delete">
                     <h5>{user.first} {user.last}</h5>
                     <div className="btn btn-warning" onClick={() => {if (confirmDelete(user)){
                         remove(user)}

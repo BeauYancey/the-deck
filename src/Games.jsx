@@ -100,7 +100,7 @@ function Games() {
 
   return (
 		<div className='grid-container'>
-      <div className="filter-selector" style={{display: "flex", flexWrap: "wrap", gap: "1em", paddingBottom: "1em", borderBottom: "1px solid black"}}>
+      <div className="filter-selector">
         <div className='input-group' style={{width: "12em"}}>
           <span className='input-group-text'>No. of Players</span>
           <input
@@ -123,10 +123,10 @@ function Games() {
         </div>
         <div className='input-group' style={{width: "18em"}}>
           <span className='input-group-text'>Genre</span>
-          <div multiple className='form-control dropdown' style={{position: "relative"}}>
-            <div onClick={toggleGenreDisplay} style={{height: "24px", width: "100%", overflow: "hidden"}}>{gameTags.filter(tag => allGenres.includes(tag)).join(", ") || "none"}</div>
+          <div multiple className='form-control dropdown'>
+            <div className='dropdown-text' onClick={toggleGenreDisplay}>{gameTags.filter(tag => allGenres.includes(tag)).join(", ") || "none"}</div>
             {genreDisplay && 
-            <div className="dropdown-content select-tag-options" style={{display: "block", position: "absolute", left: "0", top: "36px", zIndex: "15", backgroundColor: "#f8f9fa", width: "100%", maxHeight: "300px", overflow: "scroll", borderRadius: "0 0 .5em .5em", border: "1px solid grey", borderTop: "none"}}>
+            <div className="dropdown-content select-tag-options">
               {allGenres.map((genre) => {
                 return(
                 <div className='select-tag' id={genre} onClick={() => addRemoveTag(genre)}>
@@ -139,10 +139,10 @@ function Games() {
         </div>
         <div className='input-group' style={{width: "18em"}}>
           <span className='input-group-text'>Theme</span>
-          <div multiple className='form-control dropdown' style={{position: "relative"}}>
-            <div onClick={toggleThemeDisplay} style={{height: "24px", width: "100%", overflow: "hidden"}}>{gameTags.filter(tag => allThemes.includes(tag)).join(", ") || "none"}</div>
+          <div multiple className='form-control dropdown'>
+            <div className='dropdown-text' onClick={toggleThemeDisplay}>{gameTags.filter(tag => allThemes.includes(tag)).join(", ") || "none"}</div>
             {themeDisplay && 
-            <div className="dropdown-content select-tag-options" style={{display: "block", position: "absolute", left: "0", top: "36px", zIndex: "15", backgroundColor: "#f8f9fa", width: "100%", maxHeight: "300px", overflow: "scroll", borderRadius: "0 0 .5em .5em", border: "1px solid grey", borderTop: "none"}}>
+            <div className="dropdown-content select-tag-options">
               {allThemes.map((theme) => {
                 return(
                 <div className='select-tag' id={theme} onClick={() => addRemoveTag(theme)}>

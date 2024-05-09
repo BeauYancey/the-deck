@@ -29,7 +29,7 @@ function DeleteGame() {
   return (
     <div className="delete-item">
       {games.map((game) => (
-        <div className="item-row" style={{justifyContent: "space-between", width: "40vw"}}>
+        <div className="item-row admin-delete">
           <h5>{game.name}</h5>
           <div className="btn btn-warning" onClick={() => {if (confirmDelete(game.name)){
             remove(game.name)}

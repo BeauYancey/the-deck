@@ -24,7 +24,7 @@ function Home() {
         <div className="upcoming-events">
           {events.map(event => (
             <div className="item-row">
-              <img alt="party" style={{height: "8em", width: "8em", objectFit: "cover"}} src="https://media.npr.org/assets/img/2022/11/04/gettyimages-1183414292-1-_slide-edff8c3fe6afcab5c6457e3c7bd011f5c1745161.jpg" />
+              <img className='event-image' alt="party" src="https://media.npr.org/assets/img/2022/11/04/gettyimages-1183414292-1-_slide-edff8c3fe6afcab5c6457e3c7bd011f5c1745161.jpg" />
               <div style={{paddingLeft: "1em"}}>
                 <h2>{event.name}</h2>
                 <h4>{event.date.toLocaleDateString('en-us', dateDisplay)}</h4>

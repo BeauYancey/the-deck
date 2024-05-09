@@ -55,7 +55,7 @@ function Unauthenticated(props) {
         />
       </div>
       {displayError && 
-        <div style={{padding: "1em", backgroundColor: "#ff000040", borderRadius: ".375rem", marginBottom: "1em", textAlign: "center"}}>
+        <div className="error-message">
           There was an error logging you in. Please try again. <br /> If you have forgotten your password, speak with your supervisor.
         </div>
       }

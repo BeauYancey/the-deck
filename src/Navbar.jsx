@@ -29,7 +29,7 @@ function Navbar() {
       </div>
       {menuDisplay && 
       <div className='small-menu' onClick={() => toggleMenu()}>
-        <div className="nav-links" style={{display: 'flex', flexDirection: 'column'}}>
+        <div className="nav-links">
           <Link to="/games" className="btn">Games</Link>
           <Link to="/menu" className="btn">Food</Link>
           <Link to="/about" className="btn">Reservations</Link>

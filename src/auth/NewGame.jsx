@@ -180,7 +180,7 @@ function NewGame() {
         </div>
       </div>
       {displayError && 
-        <div style={{padding: "1em", backgroundColor: "#ff000040", borderRadius: ".375rem", marginBottom: "1em", textAlign: "center"}}>
+        <div className="error-message">
           There was an error adding the game. Please try again. <br /> If the issue persists, please report the error.
         </div>
       }
