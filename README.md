@@ -1,11 +1,10 @@
 #  Game Changer Board Game Cafe
 
 ### To Do
-- Remove users
-- AuthToken expiration
+- Edit existing food/game records
+- Employee game ratings
 - Calendar of events (on the homepage)
 - Link to external reservation service (on the homepage)
-- Tag games/foods by 'genre', add filter
 
 
 ***
