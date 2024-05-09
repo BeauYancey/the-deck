@@ -1,6 +1,6 @@
 import { useState } from "react";
-const allGenres = require("./tags.json").genres;
-const allThemes = require("./tags.json").themes;
+const allGenres = require("../tags.json").genres;
+const allThemes = require("../tags.json").themes;
 
 function NewGame() {
   const [name, setName] = useState('');
@@ -25,7 +25,6 @@ function NewGame() {
     if (name && img && summary && minPlayers && minPlayers > 0 && maxPlayers && maxPlayers >= minPlayers && time && time > 0 && instructions) {
       return true;
     } else {
-      console.log(maxPlayers >= minPlayers);
       return false;
     }
   }
@@ -51,7 +50,9 @@ function NewGame() {
         max: maxPlayers,
         time: time,
         instruction: instructions,
-        tags: gameTags}
+        tags: gameTags,
+        rating: 0,
+        numRatings: 0}
       ),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
@@ -81,7 +82,6 @@ function NewGame() {
       setGameTags(temp);
       document.getElementById(tag).style.backgroundColor = "#77AD78";
     }
-    console.log(gameTags);
   }
 
   return(

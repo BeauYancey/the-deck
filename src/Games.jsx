@@ -1,13 +1,18 @@
 import { useState, useEffect } from 'react';
 import GameCard from './GameCard';
 import GameInfo from './GameInfo';
+const allGenres = require('./tags.json').genres;
+const allThemes = require('./tags.json').themes;
 
 function Games() {
 
   const [players, setPlayers] = useState(0);
   const [time, setTime] = useState(0);
-  const [filter, setFilter] = useState({players: null, time: null});
+  const [filter, setFilter] = useState({players: null, time: null, tags: []});
   const [displayGame, setDisplayGame] = useState(null);
+  const [gameTags, setGameTags] = useState([]);
+  const [genreDisplay, setGenreDisplay] = useState(false);
+  const [themeDisplay, setThemeDisplay] = useState(false);
 
 	const[gameData, setGameData] = useState([]);
   useEffect(() => {
@@ -16,17 +21,58 @@ function Games() {
     .then(data => setGameData(data))
   }, []);
 
+
+
+  function addRemoveTag(tag) {
+    if (gameTags.includes(tag)) {
+      const index = gameTags.indexOf(tag);
+      const temp = gameTags;
+      temp.splice(index, 1);
+      setGameTags(temp);
+      document.getElementById(tag).style.backgroundColor = null;
+    } else {
+      const temp = gameTags;
+      temp.push(tag);
+      setGameTags(temp);
+      document.getElementById(tag).style.backgroundColor = "#77AD78";
+    }
+  }
+
+  function toggleGenreDisplay() {
+    if (genreDisplay === true) {
+      setGenreDisplay(false);
+    } else {
+      setGenreDisplay(true);
+    }
+  }
+
+  function toggleThemeDisplay() {
+    if (themeDisplay === true) {
+      setThemeDisplay(false);
+    } else {
+      setThemeDisplay(true);
+    }
+  }
+
   function passesFilter(game) {
-    if (filter.players == null && filter.time == null) {
+    if (filter.players == null && filter.time == null && filter.tags.length == 0) {
       return true;
     }
-    if (filter.players != null && (game.min > filter.players || game.max < filter.players)) {
+    if (filter.players != null && (parseInt(game.min) > filter.players || parseInt(game.max) < filter.players)) {
       console.log(`${game.name} fails on players`);
       return false;
     }
-    if (filter.time != null && (game.time > filter.time)) {
+    if (filter.time != null && (parseInt(game.time) > filter.time)) {
       console.log(`${game.name} fails on time -- ${game.time} > ${filter.time}`);
       return false
+    }
+    if (filter.tags.length > 0 && !game.tags) {
+      console.log(`${game.name} fails on tags -- game has no tags`)
+      return false
+    }
+    if (filter.tags.length > 0 && (game.tags.filter((tag) => filter.tags.includes(tag)).length == 0)) { // any == 0, all != filter.tags.length, only != game.tags.length
+      console.log(`${game.name} fails on tags -- ${game.tags} || ${gameTags} = []`)
+      return false;
     }
     return true;
   }
@@ -35,8 +81,22 @@ function Games() {
     document.querySelectorAll('.input-group input').forEach((el) => {
       el.value = '';
     })
-    setFilter({players: null, time: null})
+    setFilter({players: null, time: null, tags: []})
+    setGameTags([]);
   }
+
+  useEffect(() => {
+    document.getElementsByClassName("main-content").item(0).style.overflowY = displayGame ? "hidden" : "auto"
+  }, [displayGame]);
+
+
+  useEffect(() => {
+    gameTags.forEach((tag) => {
+      if (document.getElementById(tag)) {
+        document.getElementById(tag).style.backgroundColor = "#77AD78";
+      }
+    })
+  }, [gameTags, genreDisplay, themeDisplay]);
 
   return (
 		<div className='grid-container'>
@@ -61,9 +121,42 @@ function Games() {
             placeholder='Min'
           />
         </div>
-        <div className='btn btn-primary' onClick={() => setFilter({players: players || null, time: time || null})}>Apply Filters</div>
+        <div className='input-group' style={{width: "18em"}}>
+          <span className='input-group-text'>Genre</span>
+          <div multiple className='form-control dropdown' style={{position: "relative"}}>
+            <div onClick={toggleGenreDisplay} style={{height: "24px", width: "100%", overflow: "hidden"}}>{gameTags.filter(tag => allGenres.includes(tag)).join(", ") || "none"}</div>
+            {genreDisplay && 
+            <div className="dropdown-content select-tag-options" style={{display: "block", position: "absolute", left: "0", top: "36px", zIndex: "15", backgroundColor: "#f8f9fa", width: "100%", maxHeight: "300px", overflow: "scroll", borderRadius: "0 0 .5em .5em", border: "1px solid grey", borderTop: "none"}}>
+              {allGenres.map((genre) => {
+                return(
+                <div className='select-tag' id={genre} onClick={() => addRemoveTag(genre)}>
+                  {genre}
+                </div>)
+              })}
+            </div>
+            }
+          </div>
+        </div>
+        <div className='input-group' style={{width: "18em"}}>
+          <span className='input-group-text'>Theme</span>
+          <div multiple className='form-control dropdown' style={{position: "relative"}}>
+            <div onClick={toggleThemeDisplay} style={{height: "24px", width: "100%", overflow: "hidden"}}>{gameTags.filter(tag => allThemes.includes(tag)).join(", ") || "none"}</div>
+            {themeDisplay && 
+            <div className="dropdown-content select-tag-options" style={{display: "block", position: "absolute", left: "0", top: "36px", zIndex: "15", backgroundColor: "#f8f9fa", width: "100%", maxHeight: "300px", overflow: "scroll", borderRadius: "0 0 .5em .5em", border: "1px solid grey", borderTop: "none"}}>
+              {allThemes.map((theme) => {
+                return(
+                <div className='select-tag' id={theme} onClick={() => addRemoveTag(theme)}>
+                  {theme}
+                </div>)
+              })}
+            </div>
+            }
+          </div>
+        </div>
+        <div className='btn btn-primary' onClick={() => setFilter({players: players || null, time: time || null, tags: Array.from(gameTags)})}>Apply Filters</div>
         <div className='btn btn-secondary' onClick={() => resetFilter()}>Reset Filters</div>
       </div>
+
       {displayGame && <GameInfo game={displayGame} onClose={() => setDisplayGame(null)}/>}
 			<div className='display-grid'>
 				{gameData.map((game) => passesFilter(game) && <GameCard gameObj={game} displayInfo={() => setDisplayGame(game)}/>)}
