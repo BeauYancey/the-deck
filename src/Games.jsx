@@ -8,7 +8,7 @@ const allThemes = require('./tags.json').themes;
 function Games() {
   const [players, setPlayers] = useState(0);
   const [time, setTime] = useState(0);
-  const [filter, setFilter] = useState({players: null, time: null, genres: [], genres: [], themes: []});
+  const [filter, setFilter] = useState({players: null, time: null, genres: [], themes: []});
   const [displayGame, setDisplayGame] = useState(null);
   const [gameGenres, setGameGenres] = useState([]);
   const [gameThemes, setGameThemes] = useState([]);
