@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react"
 import FoodCard from "./FoodCard";
+import Dropdown from "./Dropdown";
 const allOptions = require('./tags.json').food
 
 function Food() {
   const [foodData, setFoodData] = useState([]);
   const [options, setOptions] = useState([]);
   const [filter, setFilter] = useState([]);
-  const [optionDisplay, setOptionDisplay] = useState(false);
 
   useEffect(() => {
     fetch("/api/food")
@@ -29,15 +29,6 @@ function Food() {
     }
   }
 
-  function toggleOptionDisplay() {
-    if (optionDisplay === true) {
-      setOptionDisplay(false);
-    }
-    else {
-      setOptionDisplay(true);
-    }
-  }
-
   function passesFilter(food) {
     if (filter.length > 0 && !food.tags) {
       console.log(`${food.name} fails on tags -- game has no tags`)
@@ -55,35 +46,10 @@ function Food() {
     setFilter([]);
   }
 
-  useEffect(() => {
-    options.forEach((tag) => {
-      if (document.getElementById(tag)) {
-        document.getElementById(tag).style.backgroundColor = "#77AD78";
-      }
-    })
-  }, [options, optionDisplay]);
-
   return (
 		<div className='grid-container' style={{marginTop: '2em'}}>
       <div className="filter-selector">
-        <div className='input-group' style={{width: "18em"}}>
-          <span className='input-group-text'>Options</span>
-          <div multiple className='form-control dropdown'>
-            <div className='dropdown-text' onClick={toggleOptionDisplay}>
-              {options.filter(tag => allOptions.includes(tag)).join(", ") || "none"}
-            </div>
-            {optionDisplay && 
-            <div className="dropdown-content select-tag-options">
-              {allOptions.map((option) => {
-                return(
-                <div className='select-tag' id={option} onClick={() => addRemoveTag(option)}>
-                  {option}
-                </div>)
-              })}
-            </div>
-            }
-          </div>
-        </div>
+        <Dropdown name="Options" filterTags={options} allTags={allOptions} addRemoveTag={addRemoveTag} />
         <div className='btn btn-primary' onClick={() => setFilter(Array.from(options))}>Apply Filters</div>
         <div className='btn btn-secondary' onClick={() => resetFilter()}>Reset Filters</div>
       </div>

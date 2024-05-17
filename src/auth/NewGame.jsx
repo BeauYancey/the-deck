@@ -10,7 +10,8 @@ function NewGame() {
   const [maxPlayers, setMaxPlayers] = useState(0);
   const [time, setTime] = useState(0);
   const [instructions, setInstructions] = useState('');
-  const [gameTags, setGameTags] = useState([]);
+  const [gameGenres, setGameGenres] = useState([]);
+  const [gameThemes, setGameThemes] = useState([]);
   const [displayError, setDisplayError] = useState(false);
   
   function resetForm() {
@@ -18,7 +19,9 @@ function NewGame() {
       el.value = '';
     })
     document.querySelector('.input-group textarea').value = null;
-    gameTags.forEach((tag) => addRemoveTag(tag))
+    gameGenres.forEach((tag) => addRemoveTag(tag, gameGenres, setGameGenres))
+    gameThemes.forEach((tag) => addRemoveTag(tag, gameThemes, setGameThemes))
+
   }
 
   function validateGame() {
@@ -50,7 +53,8 @@ function NewGame() {
         max: maxPlayers,
         time: time,
         instruction: instructions,
-        tags: gameTags,
+        genres: gameGenres,
+        themes: gameThemes,
         rating: 0,
         numRatings: 0}
       ),
@@ -69,17 +73,17 @@ function NewGame() {
     }
   }
 
-  function addRemoveTag(tag) {
-    if (gameTags.includes(tag)) {
-      const index = gameTags.indexOf(tag);
-      const temp = gameTags;
+  function addRemoveTag(tag, tagGroup, setTagGroup) {
+    if (tagGroup.includes(tag)) {
+      const index = tagGroup.indexOf(tag);
+      const temp = tagGroup;
       temp.splice(index, 1);
-      setGameTags(temp);
+      setTagGroup(temp);
       document.getElementById(tag).style.backgroundColor = null;
     } else {
-      const temp = gameTags;
+      const temp = tagGroup;
       temp.push(tag);
-      setGameTags(temp);
+      setTagGroup(temp);
       document.getElementById(tag).style.backgroundColor = "#77AD78";
     }
   }
@@ -162,7 +166,7 @@ function NewGame() {
         <div className='form-control select-tag-options'>
           {allGenres.map((tag) => {
             return (
-              <div className='select-tag' id={tag} onClick={() => addRemoveTag(tag)}>
+              <div className='select-tag' id={tag} onClick={() => addRemoveTag(tag, gameGenres, setGameGenres)}>
                 {tag}
               </div>
             )})}
@@ -173,7 +177,7 @@ function NewGame() {
         <div className='form-control select-tag-options'>
           {allThemes.map((tag) => {
             return (
-              <div className='select-tag' id={tag} onClick={() => addRemoveTag(tag)}>
+              <div className='select-tag' id={tag} onClick={() => addRemoveTag(tag, gameThemes, setGameThemes)}>
                 {tag}
               </div>
             )})}
