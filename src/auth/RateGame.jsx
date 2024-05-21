@@ -28,7 +28,7 @@ function RateGame() {
 	}
 
   return (
-		<div className="rate-game" style={{display: "flex", position: "relative"}}>
+		<div className="rate-game" style={{display: "flex"}}>
 			<div>
 				{allGames.map((game) => (
 					<div className="item-row admin-delete">
