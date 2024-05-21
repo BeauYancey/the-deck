@@ -122,6 +122,16 @@ secureApiRouter.post('/games', async (req, res) => {
   res.send(games);
 });
 
+secureApiRouter.put('/games', async (req, res) => {
+  const {_id, ...game} = req.body.game;
+  const numAffected = await DB.updateGame(_id, game);
+  if (numAffected !== 1) {
+    res.status(400).send({msg: `Bad request, update affected ${numAffected} documents`});
+  }
+  const games = await DB.getGames();
+  res.send(games)
+})
+
 // Delete a game at the /api/games endpoint
 secureApiRouter.delete('/games', async (req, res) => {
   const game = req.body;
@@ -148,12 +158,12 @@ secureApiRouter.delete('/food', async (req, res) => {
 
 // Default error handler
 app.use(function (err, req, res, next) {
-  res.status(500).send({ type: err.name, message: err.message });
+  res.status(500).send({ type: err.name, msg: err.message });
 });
 
 // 404 error if the path is unknown
 app.use((_req, res) => {
-  res.status(404).send({message: "page not found"});
+  res.status(404).send({msg: "page not found"});
 });
 
 function setAuthCookie(res, authToken) {

@@ -1,4 +1,4 @@
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 const bcrypt = require('bcrypt');
 const uuid = require('uuid');
 const config = require('./dbConfig.json');
@@ -65,6 +65,11 @@ function getGames() {
   return cursor.toArray()
 }
 
+async function updateGame(id, game) {
+  const res = await gameCollection.updateOne({_id: new ObjectId(id)}, {$set: game})
+  return res.modifiedCount;
+}
+
 async function removeGame(game) {
   await gameCollection.deleteOne(game);
 }
@@ -92,6 +97,7 @@ module.exports = {
   removeUser,
   addGame,
   getGames,
+  updateGame,
   removeGame,
   getFood,
   addFood,

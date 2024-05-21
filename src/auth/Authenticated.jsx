@@ -6,6 +6,7 @@ import CreateUser from "./CreateUser";
 import DeleteGame from "./DeleteGame";
 import DeleteFood from "./DeleteFood";
 import DeleteUser from "./DeleteUser";
+import RateGame from "./RateGame";
 
 function Authenticated(props) {
 
@@ -59,6 +60,7 @@ function Authenticated(props) {
         <Route path="remove-user" element={<DeleteUser />} />
         <Route path="delete-game" element={<DeleteGame />} />
         <Route path="delete-food" element={<DeleteFood />} />
+        <Route path="rate-game" element={<RateGame />} />
         <Route path="*" element={<CreateUser/>}/>
       </Routes>
     </div>
