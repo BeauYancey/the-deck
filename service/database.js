@@ -85,6 +85,11 @@ function getFood() {
   return cursor.toArray()
 }
 
+async function updateFood(id, food) {
+  const res = await foodCollection.updateOne({_id: new ObjectId(id)}, {$set: food})
+  return res.modifiedCount;
+}
+
 async function removeFood(food) {
   await foodCollection.deleteOne(food);
 }
@@ -99,7 +104,8 @@ module.exports = {
   getGames,
   updateGame,
   removeGame,
-  getFood,
   addFood,
+  getFood,
+  updateFood,
   removeFood
 };

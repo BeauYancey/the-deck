@@ -148,6 +148,18 @@ secureApiRouter.post('/food', async (req, res) => {
   res.send(foods);
 });
 
+secureApiRouter.put('/food', async (req, res) => {
+  const {_id, ...food} = req.body.food;
+  console.log(food)
+  const numAffected = await DB.updateFood(_id, food);
+  if (numAffected !== 1) {
+    res.status(400).send({msg: `Bad request, update affected ${numAffected} documents`});
+  } else {
+    const allFood = await DB.getFood();
+    res.send(allFood)
+  }
+})
+
 //Delete a food item atthe /api/food endpoint
 secureApiRouter.delete('/food', async (req, res) => {
   const food = req.body;

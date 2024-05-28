@@ -28,13 +28,21 @@ function EditGame() {
 		setInstructions(game.instruction);
 		
 		resetSelections();
-		if (game.genres) {
-			setGameGenres(game.genres);
-			game.genres.forEach(tag => document.getElementById(tag).style.backgroundColor = "#77AD78");
-		}
-		if (game.themes) {
-			setGameThemes(game.themes);
-			game.themes.forEach(tag => document.getElementById(tag).style.backgroundColor = "#77AD78");
+
+		if (toEdit) {
+			if (game.genres) {
+				setGameGenres(game.genres);
+				game.genres.forEach(tag => document.getElementById(tag).style.backgroundColor = "#77AD78");
+			} else {
+				setGameGenres([]);
+			}
+
+			if (game.themes) {
+				setGameThemes(game.themes);
+				game.themes.forEach(tag => document.getElementById(tag).style.backgroundColor = "#77AD78");
+			} else {
+				setGameThemes([]);
+			}
 		}
 	}
 
@@ -51,6 +59,7 @@ function EditGame() {
 		game.min = minPlayers;
 		game.max = maxPlayers;
 		game.time = time;
+		game.instruction = instructions;
 		game.genres = gameGenres;
 		game.themes = gameThemes;
 
@@ -61,7 +70,7 @@ function EditGame() {
 		})
 		.then(res => res.json())
 		.then(data => setAllGames(data))
-		.catch(() => console.log("unable to update game in DB"))
+		.catch(() => console.log("unable to update game in DB"));
 	}
 	
 
