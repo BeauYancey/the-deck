@@ -314,21 +314,32 @@ textarea::placeholder {
   padding: 1em;
 }
 
-.item-row {
+.list-item {
   padding: 1em 0 1em .5em;
   border-top: solid 2px grey;
   display: flex;
   align-items: center;
 }
 
-.item-row > h5{
+.list-item > h5 {
   margin-bottom: 0;
 }
 
-.admin-delete {
+.admin-list-item {
   justify-content: space-between;
   width: 40vw;
 }
+
+
+.admin-edit {
+  position: sticky;
+  top: 2em;
+  padding-left: 2em;
+  display: flex;
+  flex-direction: column;
+  height: 20em;
+}
+
 
 @media (max-width: 800px) {
 

@@ -29,7 +29,7 @@ function DeleteFood() {
   return (
     <div className="delete-item">
       {foods.map((food) => (
-        <div className="item-row admin-delete">
+        <div className="list-item admin-list-item">
           <h5>{food.name}</h5>
           <div className="btn btn-warning" onClick={() => {if (confirmDelete(food.name)){
             remove(food.name)}

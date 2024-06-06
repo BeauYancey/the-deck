@@ -11,8 +11,8 @@ function EditFood() {
 	useEffect(() => {
 		fetch('/api/food')
 		.then(res => res.json())
-		.then(data => setAllFoods(data))
-	})
+		.then(data => setAllFoods(data));
+	}, [])
 
 	function handleSelection(food) {
 		setToEdit(food);
@@ -65,14 +65,14 @@ function EditFood() {
 		<div className="edit-food" style={{display: "flex"}}>
 			<div>
 				{allFoods.map(food => (
-					<div className="item-row admin-delete">
+					<div className="list-item admin-list-item">
 						<h5>{food.name}</h5>
 						<div className="btn btn-primary" onClick={() => handleSelection(food)}>Edit</div>
 					</div>
 				))}
 			</div>
 			{toEdit && (
-				<div style={{paddingLeft: "2em", display: "flex", flexDirection: "column", overflow: "hidden"}}>
+				<div className="admin-edit">
 					<h3>{toEdit.name}</h3>
 					<div className='input-group mb-3'>
 						<span className='input-group-text'>Description<br/>{toEdit.description.length}/175</span>

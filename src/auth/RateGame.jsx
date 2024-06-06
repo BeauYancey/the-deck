@@ -31,14 +31,14 @@ function RateGame() {
 		<div className="rate-game" style={{display: "flex"}}>
 			<div>
 				{allGames.map((game) => (
-					<div className="item-row admin-delete">
+					<div className="list-item admin-list-item">
 						<h5>{game.name}</h5>
 						<div className="btn btn-primary" onClick={() => setToRate(game)}>Rate</div>
 					</div>
 				))}
 			</div>
 			{toRate && (
-			<div style={{paddingLeft: "8em", display: "flex", flexDirection: "column", overflow: "hidden"}}>
+			<div className="admin-edit" style={{paddingLeft: "4em"}}>
 				<h3>{toRate.name} <span style={{color: "green"}}>{Math.round(toRate.rating * 100) / 100}</span></h3>
 				<div>
 					<label style={{paddingRight: "1em"}}>{rating}</label>

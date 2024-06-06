@@ -93,14 +93,14 @@ function EditGame() {
 		<div className="edit-game" style={{display: "flex"}}>
 			<div>
 				{allGames.map((game) => (
-					<div className="item-row admin-delete">
+					<div className="list-item admin-list-item">
 						<h5>{game.name}</h5>
 						<div className="btn btn-primary" onClick={() => handleSelection(game)}>Edit</div>
 					</div>
 				))}
 			</div>
 			{toEdit &&
-				<div style={{paddingLeft: "2em", display: "flex", flexDirection: "column", overflow: "hidden"}}>
+				<div className="admin-edit">
 					<h3>{toEdit.name}</h3>
 					<div className='input-group mb-3'>
 						<span className='input-group-text'>Summary<br/>{summary.length}/175</span>
