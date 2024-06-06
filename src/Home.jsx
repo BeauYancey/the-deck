@@ -23,7 +23,7 @@ function Home() {
         <h1 style={{paddingBottom: ".5em"}}>Upcoming Events</h1>
         <div className="upcoming-events">
           {events.map(event => (
-            <div className="item-row">
+            <div className="list-item">
               <img className='event-image' alt="party" src="https://media.npr.org/assets/img/2022/11/04/gettyimages-1183414292-1-_slide-edff8c3fe6afcab5c6457e3c7bd011f5c1745161.jpg" />
               <div style={{paddingLeft: "1em"}}>
                 <h2>{event.name}</h2>

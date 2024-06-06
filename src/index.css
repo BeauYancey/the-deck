@@ -337,7 +337,7 @@ textarea::placeholder {
   padding-left: 2em;
   display: flex;
   flex-direction: column;
-  height: 20em;
+  height: calc(100vh - 7em);
 }
 
 
