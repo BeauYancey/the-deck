@@ -26,32 +26,32 @@ function EditGame() {
 		setMaxPlayers(game.max)
 		setTime(game.time);
 		setInstructions(game.instruction);
-		
-		resetSelections();
+	}
 
-		if (toEdit) {
-			if (game.genres) {
-				setGameGenres(game.genres);
-				game.genres.forEach(tag => document.getElementById(tag).style.backgroundColor = "#77AD78");
+	function resetSelections() {
+		allGenres.forEach(tag => document.getElementById(tag).style.backgroundColor = null);
+		allThemes.forEach(tag => document.getElementById(tag).style.backgroundColor = null);
+	}
+
+	useEffect(() => {
+		if (toEdit != null) {
+			resetSelections();
+			
+			if (toEdit.genres) {
+				setGameGenres(toEdit.genres);
+				toEdit.genres.forEach(tag => document.getElementById(tag).style.backgroundColor = "#77AD78");
 			} else {
 				setGameGenres([]);
 			}
 
-			if (game.themes) {
-				setGameThemes(game.themes);
-				game.themes.forEach(tag => document.getElementById(tag).style.backgroundColor = "#77AD78");
+			if (toEdit.themes) {
+				setGameThemes(toEdit.themes);
+				toEdit.themes.forEach(tag => document.getElementById(tag).style.backgroundColor = "#77AD78");
 			} else {
 				setGameThemes([]);
 			}
 		}
-	}
-
-	function resetSelections() {
-		if (toEdit) {
-			allGenres.forEach(tag => document.getElementById(tag).style.backgroundColor = null);
-			allThemes.forEach(tag => document.getElementById(tag).style.backgroundColor = null);
-		}
-	}
+	}, [toEdit])
 
 	function updateGame() {
 		let {...game} = toEdit;

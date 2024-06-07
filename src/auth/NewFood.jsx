@@ -1,10 +1,12 @@
 import { useState } from "react";
+const allOptions = require('../tags.json').food;
 
 function NewFood() {
   const [name, setName] = useState('');
   const [img, setImg] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState(0);
+  const [foodOptions, setFoodOptions] = useState([]);
   const [displayError, setDisplayError] = useState(false);
 
   function resetForm() {
@@ -35,7 +37,8 @@ function NewFood() {
         {name: name, 
         image: img, 
         description: description, 
-        price: price}
+        price: price,
+        options: foodOptions}
       ),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
@@ -52,6 +55,21 @@ function NewFood() {
       console.log(body.msg);
     }
   }
+
+  function addRemoveTag(tag, tagGroup, setTagGroup) {
+		if (tagGroup.includes(tag)) {
+		const index = tagGroup.indexOf(tag);
+		const temp = tagGroup;
+		temp.splice(index, 1);
+		setTagGroup(temp);
+		document.getElementById(tag).style.backgroundColor = null;
+		} else {
+		const temp = tagGroup;
+		temp.push(tag);
+		setTagGroup(temp);
+		document.getElementById(tag).style.backgroundColor = "#77AD78";
+		}
+	}
 
   return (
     <div className="new-food">
@@ -92,6 +110,17 @@ function NewFood() {
           onChange={(e) => setPrice(e.target.value)}
           placeholder='Dollars'
         />
+      </div>
+      <div className='input-group mb-3'>
+        <span className='input-group-text'>Options</span>
+        <div className='form-control select-tag-options'>
+          {allOptions.map((tag) => {
+            return (
+              <div className='select-tag' id={tag} onClick={() => addRemoveTag(tag, foodOptions, setFoodOptions)}>
+                {tag}
+              </div>
+            )})}
+        </div>
       </div>
       {displayError && 
         <div className="error-message">

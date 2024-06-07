@@ -18,23 +18,26 @@ function EditFood() {
 		setToEdit(food);
 		setDescription(food.description);
 		setPrice(parseFloat(food.price));
-
-		if (toEdit) {
-			allOptions.forEach(opt => document.getElementById(opt).style.backgroundColor = null)
-		}
-
-		if (food.options) {
-			setFoodOptions(food.options);
-			food.options.forEach(opt => document.getElementById(opt).style.backgroundColor = "#77AD78");
-		} else {
-			setFoodOptions([]);
-		}
 	}
+
+	useEffect(() => {
+		if (toEdit != null) {
+			console.log(toEdit)
+			allOptions.forEach(opt => document.getElementById(opt).style.backgroundColor = null)
+			if (toEdit.options) {
+				setFoodOptions(toEdit.options);
+				toEdit.options.forEach(opt => document.getElementById(opt).style.backgroundColor = "#77AD78");
+			} else {
+				setFoodOptions([]);
+			}
+		}
+	}, [toEdit])
 
 	function updateFood() {
 		let {...food} = toEdit;
 		food.description = description;
 		food.price = price;
+		food.options = foodOptions;
 
 		fetch('/api/food', {
 			method: "put",
@@ -47,25 +50,25 @@ function EditFood() {
 	}
 
 	function addRemoveTag(tag, tagGroup, setTagGroup) {
-    if (tagGroup.includes(tag)) {
-      const index = tagGroup.indexOf(tag);
-      const temp = tagGroup;
-      temp.splice(index, 1);
-      setTagGroup(temp);
-      document.getElementById(tag).style.backgroundColor = null;
-    } else {
-      const temp = tagGroup;
-      temp.push(tag);
-      setTagGroup(temp);
-      document.getElementById(tag).style.backgroundColor = "#77AD78";
-    }
-  }
+		if (tagGroup.includes(tag)) {
+		const index = tagGroup.indexOf(tag);
+		const temp = tagGroup;
+		temp.splice(index, 1);
+		setTagGroup(temp);
+		document.getElementById(tag).style.backgroundColor = null;
+		} else {
+		const temp = tagGroup;
+		temp.push(tag);
+		setTagGroup(temp);
+		document.getElementById(tag).style.backgroundColor = "#77AD78";
+		}
+	}
 
 	return (
 		<div className="edit-food" style={{display: "flex"}}>
 			<div>
 				{allFoods.map(food => (
-					<div className="list-item admin-list-item">
+					<div key={food._id} className="list-item admin-list-item">
 						<h5>{food.name}</h5>
 						<div className="btn btn-primary" onClick={() => handleSelection(food)}>Edit</div>
 					</div>
@@ -75,7 +78,7 @@ function EditFood() {
 				<div className="admin-edit">
 					<h3>{toEdit.name}</h3>
 					<div className='input-group mb-3'>
-						<span className='input-group-text'>Description<br/>{toEdit.description.length}/175</span>
+						<span className='input-group-text' style={{backgroundColor: description !== toEdit.description && '#eed202'}}>Description<br/>{toEdit.description.length}/175</span>
 						<textarea
 							className='form-control'
 							type='text'
@@ -87,7 +90,7 @@ function EditFood() {
 						/>
 					</div>
 					<div className='input-group mb-3'>
-						<span className='input-group-text'>Price</span>
+						<span className='input-group-text' style={{backgroundColor: price !== toEdit.price && '#eed202'}}>Price</span>
 						<input
 							className='form-control'
 							type='number'
@@ -97,11 +100,11 @@ function EditFood() {
 						/>
 					</div>
 					<div className='input-group mb-3'>
-						<span className='input-group-text'>Options</span>
+						<span className='input-group-text' style={{backgroundColor: foodOptions !== toEdit.options && '#eed202'}}>Options</span>
 						<div className='form-control select-tag-options'>
 							{allOptions.map((tag) => {
 								return (
-									<div className='select-tag' id={tag} onClick={() => addRemoveTag(tag, foodOptions, setFoodOptions)}>
+									<div className='select-tag' key={tag} id={tag} onClick={() => addRemoveTag(tag, foodOptions, setFoodOptions)}>
 										{tag}
 									</div>
 								)})}
