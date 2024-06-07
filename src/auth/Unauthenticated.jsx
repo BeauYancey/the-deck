@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Unauthenticated(props) {
   const [displayError, setDisplayError] = useState(false);
@@ -26,13 +26,15 @@ function Unauthenticated(props) {
     }
   }
 
-  document.querySelectorAll(".unauthenticated .input-group")
-  .forEach((el) => el.addEventListener('keyup', (event) => {
-    event.preventDefault();
-    if (event.keyCode === 13) {
-      loginUser();
-    }
-  }))
+  useEffect(() => {
+    document.querySelectorAll(".form-control")
+    .forEach((el) => el.addEventListener('keypress', (event) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        document.getElementById("login").click();
+      }
+    }))}, []);
+
 
   return(
     <div className="unauthenticated">
@@ -59,7 +61,7 @@ function Unauthenticated(props) {
           There was an error logging you in. Please try again. <br /> If you have forgotten your password, speak with your supervisor.
         </div>
       }
-      <div className="btn btn-primary" onClick={() => loginUser()}>
+      <div className="btn btn-primary" id="login" onClick={() => loginUser()}>
         Login
       </div>
     </div>
