@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Multiselect from "./Multiselect";
 const allGenres = require("../tags.json").genres;
 const allThemes = require("../tags.json").themes;
 
@@ -22,36 +23,13 @@ function EditGame() {
 	function handleSelection(game) {
 		setToEdit(game);
 		setSummary(game.summary);
-		setMinPlayers(game.min)
-		setMaxPlayers(game.max)
+		setMinPlayers(game.min);
+		setMaxPlayers(game.max);
 		setTime(game.time);
 		setInstructions(game.instruction);
+		setGameGenres(game.genres ? Array.from(game.genres) : []);
+		setGameThemes(game.themes ? Array.from(game.themes) : []);
 	}
-
-	function resetSelections() {
-		allGenres.forEach(tag => document.getElementById(tag).style.backgroundColor = null);
-		allThemes.forEach(tag => document.getElementById(tag).style.backgroundColor = null);
-	}
-
-	useEffect(() => {
-		if (toEdit != null) {
-			resetSelections();
-			
-			if (toEdit.genres) {
-				setGameGenres(toEdit.genres);
-				toEdit.genres.forEach(tag => document.getElementById(tag).style.backgroundColor = "#77AD78");
-			} else {
-				setGameGenres([]);
-			}
-
-			if (toEdit.themes) {
-				setGameThemes(toEdit.themes);
-				toEdit.themes.forEach(tag => document.getElementById(tag).style.backgroundColor = "#77AD78");
-			} else {
-				setGameThemes([]);
-			}
-		}
-	}, [toEdit])
 
 	function updateGame() {
 		let {...game} = toEdit;
@@ -72,22 +50,7 @@ function EditGame() {
 		.then(data => setAllGames(data))
 		.catch(() => console.log("unable to update game in DB"));
 	}
-	
 
-	function addRemoveTag(tag, tagGroup, setTagGroup) {
-    if (tagGroup.includes(tag)) {
-      const index = tagGroup.indexOf(tag);
-      const temp = tagGroup;
-      temp.splice(index, 1);
-      setTagGroup(temp);
-      document.getElementById(tag).style.backgroundColor = null;
-    } else {
-      const temp = tagGroup;
-      temp.push(tag);
-      setTagGroup(temp);
-      document.getElementById(tag).style.backgroundColor = "#77AD78";
-    }
-  }
 
   return (
 		<div className="edit-game" style={{display: "flex"}}>
@@ -103,11 +66,11 @@ function EditGame() {
 				<div className="admin-edit">
 					<h3>{toEdit.name}</h3>
 					<div className='input-group mb-3'>
-						<span className='input-group-text'>Summary<br/>{summary.length}/175</span>
+						<span className='input-group-text' style={{backgroundColor: summary !== toEdit.summary && '#eed202'}}>Summary<br/>{summary.length}/175</span>
 						<textarea
 							className='form-control'
 							type='text'
-							value={toEdit.summary}
+							value={summary}
 							onChange={(e) => setSummary(e.target.value)}
 							style={{resize: "none"}}
 							rows="3"
@@ -116,33 +79,33 @@ function EditGame() {
 					</div>
 					<div className="form-horizontal mb-3" style={{display: "flex", gap: "1em"}}>
 						<div className='input-group'>
-							<span className='input-group-text'>Min Players</span>
+							<span className='input-group-text' style={{backgroundColor: minPlayers !== toEdit.min && '#eed202'}}>Min Players</span>
 							<input
 								className='form-control'
 								type='number'
-								value={toEdit.min}
+								value={minPlayers}
 								min="0"
 								onChange={(e) => setMinPlayers(e.target.value)}
 								placeholder='0'
 							/>
 						</div>
 						<div className='input-group'>
-							<span className='input-group-text'>Max Players</span>
+							<span className='input-group-text' style={{backgroundColor: maxPlayers !== toEdit.max && '#eed202'}}>Max Players</span>
 							<input
 								className='form-control'
 								type='number'
-								value={toEdit.max}
+								value={maxPlayers}
 								max="12"
 								onChange={(e) => setMaxPlayers(e.target.value)}
 								placeholder='0'
 							/>
 						</div>
 						<div className='input-group'>
-							<span className='input-group-text'>Time to play</span>
+							<span className='input-group-text' style={{backgroundColor: time !== toEdit.time && '#eed202'}}>Time to play</span>
 							<input
 								className='form-control'
 								type='number'
-								value={toEdit.time}
+								value={time}
 								min="0"
 								onChange={(e) => setTime(e.target.value)}
 								placeholder='Min'
@@ -150,37 +113,17 @@ function EditGame() {
 						</div>
 					</div>
 					<div className='input-group mb-3'>
-						<span className='input-group-text'>Instructions</span>
+						<span className='input-group-text' style={{backgroundColor: instructions !== toEdit.instruction && '#eed202'}}>Instructions</span>
 						<input
 							className='form-control'
 							type='text'
-							value={toEdit.instruction}
+							value={instructions}
 							onChange={(e) => setInstructions(e.target.value)}
 							placeholder='https://url.com/instructions.pdf'
 						/>
 					</div>
-					<div className='input-group mb-3'>
-						<span className='input-group-text'>Genres</span>
-						<div className='form-control select-tag-options'>
-							{allGenres.map((tag) => {
-								return (
-									<div className='select-tag' id={tag} onClick={() => addRemoveTag(tag, gameGenres, setGameGenres)}>
-										{tag}
-									</div>
-								)})}
-						</div>
-					</div>
-					<div className='input-group mb-3'>
-						<span className='input-group-text'>Themes</span>
-						<div className='form-control select-tag-options'>
-							{allThemes.map((tag) => {
-								return (
-									<div className='select-tag' id={tag} onClick={() => addRemoveTag(tag, gameThemes, setGameThemes)}>
-										{tag}
-									</div>
-								)})}
-						</div>
-					</div>
+					<Multiselect name="Genres" allOptions={allGenres} current={gameGenres} setCurrent={setGameGenres} orig={toEdit.genres}/>
+					<Multiselect name="Themes" allOptions={allThemes} current={gameThemes} setCurrent={setGameThemes} orig={toEdit.themes} showChanges/>
 					<div className="btn btn-secondary" onClick={updateGame}>
 						Submit
 					</div>

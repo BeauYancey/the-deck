@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Multiselect from "./Multiselect";
 const allGenres = require("../tags.json").genres;
 const allThemes = require("../tags.json").themes;
 
@@ -19,9 +20,8 @@ function NewGame() {
       el.value = '';
     })
     document.querySelector('.input-group textarea').value = null;
-    gameGenres.forEach((tag) => addRemoveTag(tag, gameGenres, setGameGenres))
-    gameThemes.forEach((tag) => addRemoveTag(tag, gameThemes, setGameThemes))
-
+    setGameGenres([]);
+    setGameThemes([]);
   }
 
   function validateGame() {
@@ -70,21 +70,6 @@ function NewGame() {
     else {
       setDisplayError(true);
       console.log(response);
-    }
-  }
-
-  function addRemoveTag(tag, tagGroup, setTagGroup) {
-    if (tagGroup.includes(tag)) {
-      const index = tagGroup.indexOf(tag);
-      const temp = tagGroup;
-      temp.splice(index, 1);
-      setTagGroup(temp);
-      document.getElementById(tag).style.backgroundColor = null;
-    } else {
-      const temp = tagGroup;
-      temp.push(tag);
-      setTagGroup(temp);
-      document.getElementById(tag).style.backgroundColor = "#77AD78";
     }
   }
 
@@ -161,28 +146,8 @@ function NewGame() {
           placeholder='https://url.com/instructions.pdf'
         />
       </div>
-      <div className='input-group mb-3'>
-        <span className='input-group-text'>Genres</span>
-        <div className='form-control select-tag-options'>
-          {allGenres.map((tag) => {
-            return (
-              <div className='select-tag' id={tag} onClick={() => addRemoveTag(tag, gameGenres, setGameGenres)}>
-                {tag}
-              </div>
-            )})}
-        </div>
-      </div>
-      <div className='input-group mb-3'>
-        <span className='input-group-text'>Themes</span>
-        <div className='form-control select-tag-options'>
-          {allThemes.map((tag) => {
-            return (
-              <div className='select-tag' id={tag} onClick={() => addRemoveTag(tag, gameThemes, setGameThemes)}>
-                {tag}
-              </div>
-            )})}
-        </div>
-      </div>
+      <Multiselect name="Genres" allOptions={allGenres} current={gameGenres} setCurrent={setGameGenres} />
+      <Multiselect name="Themes" allOptions={allThemes} current={gameThemes} setCurrent={setGameThemes} />
       {displayError && 
         <div className="error-message">
           There was an error adding the game. Please try again. <br /> If the issue persists, please report the error.

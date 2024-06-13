@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Multiselect from "./Multiselect";
 const allOptions = require("../tags.json").food;
 
 function EditFood() {
@@ -18,20 +19,8 @@ function EditFood() {
 		setToEdit(food);
 		setDescription(food.description);
 		setPrice(parseFloat(food.price));
+		setFoodOptions(food.options ? Array.from(food.options) : [])
 	}
-
-	useEffect(() => {
-		if (toEdit != null) {
-			console.log(toEdit)
-			allOptions.forEach(opt => document.getElementById(opt).style.backgroundColor = null)
-			if (toEdit.options) {
-				setFoodOptions(toEdit.options);
-				toEdit.options.forEach(opt => document.getElementById(opt).style.backgroundColor = "#77AD78");
-			} else {
-				setFoodOptions([]);
-			}
-		}
-	}, [toEdit])
 
 	function updateFood() {
 		let {...food} = toEdit;
@@ -47,21 +36,8 @@ function EditFood() {
 		.then(res => res.json())
 		.then(data => setAllFoods(data))
 		.catch(() => console.log("unable to update food in DB"));
-	}
 
-	function addRemoveTag(tag, tagGroup, setTagGroup) {
-		if (tagGroup.includes(tag)) {
-		const index = tagGroup.indexOf(tag);
-		const temp = tagGroup;
-		temp.splice(index, 1);
-		setTagGroup(temp);
-		document.getElementById(tag).style.backgroundColor = null;
-		} else {
-		const temp = tagGroup;
-		temp.push(tag);
-		setTagGroup(temp);
-		document.getElementById(tag).style.backgroundColor = "#77AD78";
-		}
+		setToEdit(allFoods.filter(obj => obj.name === toEdit.name)[0]);
 	}
 
 	return (
@@ -99,17 +75,7 @@ function EditFood() {
 							placeholder='Dollars'
 						/>
 					</div>
-					<div className='input-group mb-3'>
-						<span className='input-group-text' style={{backgroundColor: foodOptions !== toEdit.options && '#eed202'}}>Options</span>
-						<div className='form-control select-tag-options'>
-							{allOptions.map((tag) => {
-								return (
-									<div className='select-tag' key={tag} id={tag} onClick={() => addRemoveTag(tag, foodOptions, setFoodOptions)}>
-										{tag}
-									</div>
-								)})}
-						</div>
-					</div>
+					<Multiselect name="Options" allOptions={allOptions} current={foodOptions} setCurrent={setFoodOptions} orig={toEdit.options} showChanges/>
 					<div className="btn btn-secondary" onClick={updateFood}>
 						Submit
 					</div>

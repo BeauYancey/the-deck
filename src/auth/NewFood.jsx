@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Multiselect from "./Multiselect";
 const allOptions = require('../tags.json').food;
 
 function NewFood() {
@@ -14,6 +15,7 @@ function NewFood() {
       el.value = '';
     })
     document.querySelector('.input-group textarea').value = null;
+    setFoodOptions([]);
   }
 
   function validateFood() {
@@ -56,21 +58,6 @@ function NewFood() {
     }
   }
 
-  function addRemoveTag(tag, tagGroup, setTagGroup) {
-		if (tagGroup.includes(tag)) {
-		const index = tagGroup.indexOf(tag);
-		const temp = tagGroup;
-		temp.splice(index, 1);
-		setTagGroup(temp);
-		document.getElementById(tag).style.backgroundColor = null;
-		} else {
-		const temp = tagGroup;
-		temp.push(tag);
-		setTagGroup(temp);
-		document.getElementById(tag).style.backgroundColor = "#77AD78";
-		}
-	}
-
   return (
     <div className="new-food">
       <div className='input-group mb-3'>
@@ -111,17 +98,7 @@ function NewFood() {
           placeholder='Dollars'
         />
       </div>
-      <div className='input-group mb-3'>
-        <span className='input-group-text'>Options</span>
-        <div className='form-control select-tag-options'>
-          {allOptions.map((tag) => {
-            return (
-              <div className='select-tag' id={tag} onClick={() => addRemoveTag(tag, foodOptions, setFoodOptions)}>
-                {tag}
-              </div>
-            )})}
-        </div>
-      </div>
+      <Multiselect name="Options" allOptions={allOptions} current={foodOptions} setCurrent={setFoodOptions} />
       {displayError && 
         <div className="error-message">
           There was an error adding the food item. Please try again. <br /> If the issue persists, please report the error.
