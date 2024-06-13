@@ -126,7 +126,7 @@ secureApiRouter.post('/games', async (req, res) => {
 secureApiRouter.put('/games', async (req, res) => {
   const {_id, ...game} = req.body.game;
   const numAffected = await DB.updateGame(_id, game);
-  if (numAffected !== 1) {
+  if (numAffected > 1) {
     res.status(400).send({msg: `Bad request, update affected ${numAffected} documents`});
   }
   const games = await DB.getGames();
@@ -153,7 +153,7 @@ secureApiRouter.put('/food', async (req, res) => {
   const {_id, ...food} = req.body.food;
   console.log(food)
   const numAffected = await DB.updateFood(_id, food);
-  if (numAffected !== 1) {
+  if (numAffected > 1) {
     res.status(400).send({msg: `Bad request, update affected ${numAffected} documents`});
   } else {
     const allFood = await DB.getFood();
