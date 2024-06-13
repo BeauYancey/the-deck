@@ -175,6 +175,14 @@ secureApiRouter.delete('/food', async (req, res) => {
   res.send(foods);
 });
 
+secureApiRouter.post('/events', async (req, res) => {
+  let event = req.body;
+  event.date = new Date(event.date);
+  await DB.createEvent(event);
+  const foods = await DB.getEvents();
+  res.send(foods);
+})
+
 // Default error handler
 app.use(function (err, req, res, next) {
   res.status(500).send({ type: err.name, msg: err.message });

@@ -9,6 +9,7 @@ import DeleteUser from "./DeleteUser";
 import RateGame from "./RateGame";
 import EditGame from "./EditGame";
 import EditFood from "./EditFood";
+import NewEvent from "./NewEvent";
 
 function Authenticated(props) {
 
@@ -66,6 +67,7 @@ function Authenticated(props) {
         <Route path="rate-game" element={<RateGame />} />
         <Route path="edit-game" element={<EditGame />} />
         <Route path="edit-food" element={<EditFood />} />
+        <Route path="new-event" element={<NewEvent />} />
         <Route path="*" element={<CreateUser/>}/>
       </Routes>
     </div>

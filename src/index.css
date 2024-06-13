@@ -273,8 +273,12 @@ textarea::placeholder {
   text-align: center;
 }
 
-.form-horizontal .input-group {
-  width: 11.5em;
+.form-horizontal-3 .input-group {
+  width: calc((36.5em - 2em) / 3)
+}
+
+.form-horizontal-4 .input-group {
+  width: calc((36.5em - 3em) / 4)
 }
 
 .unauthenticated .input-group {

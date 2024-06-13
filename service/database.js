@@ -125,6 +125,5 @@ module.exports = {
   removeFood,
   createEvent,
   getEvents,
-  removeEvent,
-  refreshEvents
+  removeEvent
 };

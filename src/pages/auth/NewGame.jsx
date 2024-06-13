@@ -105,7 +105,7 @@ function NewGame() {
           maxLength="175"
         />
       </div>
-      <div className="form-horizontal mb-3" style={{display: "flex", gap: "1em"}}>
+      <div className="form-horizontal-3 mb-3" style={{display: "flex", gap: "1em"}}>
         <div className='input-group'>
           <span className='input-group-text'>Min Players</span>
           <input
