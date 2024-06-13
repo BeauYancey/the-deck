@@ -50,6 +50,12 @@ apiRouter.get('/food', async (req, res) => {
   res.send(food);
 })
 
+apiRouter.get('/events', async (req, res) => {
+  const events = await DB.getEvents();
+  res.setHeader('Content-Type', 'application/json');
+  res.send(events);
+})
+
 // Create a secure api router that uses the /api path
 const secureApiRouter = express.Router();
 apiRouter.use(secureApiRouter);

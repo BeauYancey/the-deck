@@ -9,6 +9,7 @@ const db = client.db('GameChanger');
 const gameCollection = db.collection('BoardGames');
 const empCollection = db.collection("Employees");
 const foodCollection = db.collection("Food");
+const eventCollection = db.collection("Events");
 
 // This will asynchronously test the connection and exit the process if it fails
 (async function testConnection() {
@@ -20,16 +21,16 @@ const foodCollection = db.collection("Food");
 });
 
 // Get an employee from the database by their email
-function getEmp(email) {
-  return empCollection.findOne({ email: email });
+async function getEmp(email) {
+  return await empCollection.findOne({ email: email });
 }
 // Get an employee from the database by their auth cookie
-function getEmpByToken(token) {
-  return empCollection.findOne({ token: token });
+async function getEmpByToken(token) {
+  return await empCollection.findOne({ token: token });
 }
 
-function getAllEmps() {
-  return empCollection.find().sort({"firstName": 1}).toArray();
+async function getAllEmps() {
+  return await empCollection.find().sort({"firstName": 1}).toArray();
 }
 
 async function removeUser(user) {
@@ -60,8 +61,8 @@ async function addGame(game) {
 }
 
 // Get all the games from the database
-function getGames() {
-  const cursor = gameCollection.find().sort({"name": 1})
+async function getGames() {
+  const cursor = await gameCollection.find().sort({"name": 1})
   return cursor.toArray()
 }
 
@@ -80,8 +81,8 @@ async function addFood(food) {
 }
 
 // Get all the food items from the database
-function getFood() {
-  const cursor = foodCollection.find().sort({"name": 1})
+async function getFood() {
+  const cursor = await foodCollection.find().sort({"name": 1})
   return cursor.toArray()
 }
 
@@ -93,6 +94,20 @@ async function updateFood(id, food) {
 async function removeFood(food) {
   await foodCollection.deleteOne(food);
 }
+
+async function createEvent(event) {
+  await eventCollection.insertOne(event);
+}
+
+async function getEvents() {
+  const cursor = await eventCollection.find().sort({"date": 1})
+  return cursor.toArray()
+}
+
+async function removeEvent(event) {
+  await eventCollection.deleteOne(event)
+}
+
 
 module.exports = {
   getEmp,
@@ -107,5 +122,8 @@ module.exports = {
   addFood,
   getFood,
   updateFood,
-  removeFood
+  removeFood,
+  createEvent,
+  getEvents,
+  removeEvent
 };
