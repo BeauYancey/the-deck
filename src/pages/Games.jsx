@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import GameCard from './GameCard';
-import GameInfo from './GameInfo';
-import Dropdown from './Dropdown';
-const allGenres = require('./tags.json').genres;
-const allThemes = require('./tags.json').themes;
+import GameCard from '../components/GameCard';
+import GameInfo from '../components/GameInfo';
+import Dropdown from '../components/Dropdown';
+const allGenres = require('../tags.json').genres;
+const allThemes = require('../tags.json').themes;
 
 function Games() {
   const [players, setPlayers] = useState(0);

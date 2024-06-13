@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
-import FoodCard from "./FoodCard";
-import Dropdown from "./Dropdown";
-const allOptions = require('./tags.json').food
+import FoodCard from "../components/FoodCard";
+import Dropdown from "../components/Dropdown";
+const allOptions = require('../tags.json').food
 
 function Food() {
   const [foodData, setFoodData] = useState([]);

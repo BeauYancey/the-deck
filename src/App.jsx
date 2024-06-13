@@ -1,10 +1,10 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import Navbar from './Navbar';
-import Home from './Home';
-import Games from './Games';
-import Food from './Food';
-import Login from './auth/Login';
+import Navbar from './components/Navbar';
+import Home from './pages/Home';
+import Games from './pages/Games';
+import Food from './pages/Food';
+import Login from './pages/auth/Login';
 
 function App() {
 

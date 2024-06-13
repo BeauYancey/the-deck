@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Multiselect from "./Multiselect";
-const allOptions = require('../tags.json').food;
+import Multiselect from "../../components/Multiselect";
+const allOptions = require('../../tags.json').food;
 
 function NewFood() {
   const [name, setName] = useState('');

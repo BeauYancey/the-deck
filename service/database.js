@@ -100,7 +100,7 @@ async function createEvent(event) {
 }
 
 async function getEvents() {
-  const cursor = await eventCollection.find().sort({"date": 1})
+  const cursor = await eventCollection.find({"date": {$gt: new Date()}}).sort({"date": 1})
   return cursor.toArray()
 }
 
@@ -125,5 +125,6 @@ module.exports = {
   removeFood,
   createEvent,
   getEvents,
-  removeEvent
+  removeEvent,
+  refreshEvents
 };
