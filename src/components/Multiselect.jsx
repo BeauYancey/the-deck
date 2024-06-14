@@ -17,7 +17,7 @@ function Multiselect({name, allOptions, current, setCurrent, orig, showChanges})
 		return true;
 	}
 
-	function addRemoveTag(tag, current, setCurrent) {
+	function select(tag) {
 		if (current.includes(tag)) {
 			const index = current.indexOf(tag);
 			const temp = current;
@@ -54,7 +54,7 @@ function Multiselect({name, allOptions, current, setCurrent, orig, showChanges})
 			<span className='input-group-text' id={name + "-span"}>{name}</span>
 			<div className='form-control select-tag-options'>
 				{allOptions.map(opt => (
-					<div className="select-tag" id={opt.replace(" ", "-")} key={opt.replace(" ", "-")} onClick={() => addRemoveTag(opt, current, setCurrent)}>
+					<div className="select-tag" id={opt.replace(" ", "-")} key={opt.replace(" ", "-")} onClick={() => select(opt)}>
 						{opt}
 					</div>
 				))}

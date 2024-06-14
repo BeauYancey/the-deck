@@ -8,7 +8,7 @@ function Events() {
     .then(data => setEvents(data))
   }, []);
 
-  const dateDisplay = { weekday: 'long', month: 'short', day: 'numeric' };
+  const dateDisplay = { weekday: 'long', month: 'short', day: 'numeric', hour12: true, hour: 'numeric', minute: 'numeric' };
 	
 	return (
 		<div className="events-list">
@@ -19,7 +19,7 @@ function Events() {
 						<img className='event-image' alt="party" src={event.img} />
 						<div style={{paddingLeft: "1em"}}>
 							<h2>{event.name}</h2>
-							<h4>{new Date(event.date).toLocaleDateString('en-us', dateDisplay)}</h4>
+							<h4>{new Date(event.date).toLocaleString('en-us', dateDisplay)}</h4>
 							<p>{event.description} -- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 						</div>
 					</div>

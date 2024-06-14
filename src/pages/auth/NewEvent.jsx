@@ -1,9 +1,15 @@
 import { useState } from "react"
+import SelectImg from "../../components/SelectImg";
 
 function NewEvent() {
 
+  const links = [
+    {name:"family", link:"https://media.istockphoto.com/id/1347262799/photo/family-playing-board-game-together.jpg?s=612x612&w=0&k=20&c=7_DsgdDa4idH6vYXa0_2y3QxGMipYuLVxw2k49VQKp0="},
+    {name:"tournament", link:"https://i.pinimg.com/originals/41/36/16/41361625cc44df07f81a620eac766468.png"},
+  ]
+
 	const [name, setName] = useState('');
-	const [img, setImg] = useState('');
+	const [img, setImg] = useState({name: '', link: ''});
 	const [description, setDescription] = useState('');
 	const [displayError, setDisplayError] = useState(false);
 
@@ -20,7 +26,7 @@ function NewEvent() {
 			method: 'post',
 			body: JSON.stringify(
         {name: name, 
-        image: img, 
+        image: img.link, 
         description: description, 
         date: date}
       ),
@@ -57,16 +63,7 @@ function NewEvent() {
           placeholder='Family Night'
         />
       </div>
-			<div className='input-group mb-3'>
-        <span className='input-group-text'>Image Link</span>
-        <input
-          className='form-control'
-          type='text'
-          onChange={(e) => setImg(e.target.value)}
-          placeholder='https://url.com/img.jpg'
-        />
-      </div>
-
+      <SelectImg name="Image" options={links} current={img} setCurrent={setImg}/>
 			<div className="form-horizontal-4 mb-3" style={{display: "flex", gap: "1em"}}>
         <div className='input-group'>
           <span className='input-group-text'>Year</span>
