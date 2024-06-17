@@ -7,8 +7,11 @@ function GameInfo({game, onClose}) {
 			<p><a href={game.instruction} target="_blank" rel="noreferrer">Instructions</a></p>
 			<p>Players: {game.min}{parseInt(game.max) > parseInt(game.min) ? `-${game.max}` : ""}</p>
 			<p>Time to play: {game.time} min.</p>
-			{game.tags && 
-				<p>Tags: {game.tags.join(", ")}</p>
+			{game.genres && 
+				<p>Genres: {game.genres.join(", ")}</p>
+			}
+			{game.themes && 
+				<p>Themes: {game.themes.join(", ")}</p>
 			}
 		</div>
   )

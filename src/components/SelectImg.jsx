@@ -14,7 +14,7 @@ function SelectImg({name, options, current, setCurrent}) {
 			<div className='form-control select-tag-options'>
 				{options.map(opt => (
 					<figure className="select-tag" id={opt.name.replace(" ", "-")} key={opt.name.replace(" ", "-")} onClick={() => select(opt)}>
-						<img className="event-image" style={{height: "6.25em", width: "6.25em"}}src={opt.link}/>
+						<img className="event-image" style={{height: "6.25em", width: "6.25em"}} src={opt.link} alt=''/>
                         <figcaption style={{textAlign: 'center'}}>{opt.name}</figcaption>
 					</figure>
 				))}

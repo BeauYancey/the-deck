@@ -1,7 +1,7 @@
 function FoodCard({foodObj}) {
 
     return (
-      <div className="card">
+      <div className="card food-card">
         <img src={foodObj.image} className="card-img-top" alt={`${foodObj.name}`}/>
         <div className="card-body">
           <h5 className="card-title">{foodObj.name}</h5>
