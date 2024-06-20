@@ -1,5 +1,6 @@
 import { Routes, Route, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import Accordion from 'react-bootstrap/Accordion';
 import NewGame from "./NewGame";
 import NewFood from "./NewFood";
 import CreateUser from "./CreateUser";
@@ -33,25 +34,54 @@ function Authenticated(props) {
     .then(data => setUser(data))
   }, [props.email])
 
-
   return (
     <div className="authenticated">
       <div className="dock">
-        {(user.role === "admin" || user.role ==="super-admin") &&
-          <Link to="add-user">Add User</Link>
-        }
-        <Link to="add-game">Add Game</Link>
-        <Link to="add-food" style={{borderBottom: "1px solid white"}}>Add Food</Link>
+        <Accordion>
+          <Accordion.Item eventKey='0'>
+            <Accordion.Header>Games</Accordion.Header>
+            <Accordion.Body>
+              <div style={{display: 'flex', flexDirection: 'column'}}>
+                <Link to="add-game">Add Game</Link>
+                <Link to="rate-game">Rate Game</Link>
+                <Link to="edit-game">Edit Game</Link>
+                <Link to="delete-game">Delete Game</Link>
+              </div>
+            </Accordion.Body>
+          </Accordion.Item>
 
-        <Link to="rate-game">Rate Game</Link>
-        <Link to="edit-game">Edit Game</Link>
-        <Link to="edit-food" style={{borderBottom: "1px solid white"}}>Edit Food</Link>
+          <Accordion.Item eventKey='1'>
+            <Accordion.Header>Food</Accordion.Header>
+            <Accordion.Body>
+              <div style={{display: 'flex', flexDirection: 'column'}}>
+                <Link to="add-food">Add Food</Link>
+                <Link to="edit-food">Edit Food</Link>
+                <Link to="delete-food">Delete Food</Link>
+              </div>
+            </Accordion.Body>
+          </Accordion.Item>
 
-        {(user.role === "admin" || user.role ==="super-admin") &&
-          <Link to="remove-user">Remove User</Link>
-        }
-        <Link to="delete-game">Delete Game</Link>
-        <Link to="delete-food" style={{borderBottom: "1px solid white"}}>Delete Food</Link>
+          <Accordion.Item eventKey='2'>
+            <Accordion.Header>Events</Accordion.Header>
+            <Accordion.Body>
+              <div style={{display: 'flex', flexDirection: 'column'}}>
+                <Link to="new-event" element={<NewEvent />}>New Event</Link>
+              </div>
+            </Accordion.Body>
+          </Accordion.Item>
+
+          {user.role === 'admin' && (
+          <Accordion.Item eventKey='3'>
+            <Accordion.Header>Users</Accordion.Header>
+            <Accordion.Body>
+              <div style={{display: 'flex', flexDirection: 'column'}}>
+                <Link to="add-user">Add User</Link>
+                <Link to="remove-user">Remove User</Link>
+              </div>
+            </Accordion.Body>
+          </Accordion.Item>
+          )}
+        </Accordion>
 
         <div className="btn btn-primary" style={{margin: "1em"}} onClick={() => logout()}>Log Out</div>
       </div>

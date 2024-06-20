@@ -1,3 +1,8 @@
+:root {
+  /* Override bootstrap variables */
+  --bs-primary: #290565;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -322,6 +327,7 @@ textarea::placeholder {
   background-color: #532747;
   padding: 1em;
   height: calc(100vh - 5em);
+  width: 12em;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -333,6 +339,41 @@ textarea::placeholder {
   text-decoration: none;
   color: #FFFFFF;
   padding: 1em;
+}
+
+.accordion {
+  /* Override bootstrap variables */
+  --bs-accordion-btn-focus-border-color: transparent;
+  --bs-accordion-btn-focus-box-shadow: none;
+}
+
+.accordion-collapse.show, .accordion-collapse.collapsing{
+  border-top: 1px solid white;
+}
+
+.accordion-body {
+  padding: 0
+}
+
+.accordion-item, .accordion-header > button {
+  background-color: #532747 !important;
+  color: #FFFFFF
+}
+
+.accordion-button::after {
+  filter: brightness(1000%)
+}
+
+.accordion-button:focus {
+  border: 0;
+}
+
+.accordion-button:not(.collapsed) {
+  color: inherit;
+}
+
+.accordion-button:not(.collapsed)::after {
+  background-image: var(--bs-accordion-btn-icon);
 }
 
 .list-item {
