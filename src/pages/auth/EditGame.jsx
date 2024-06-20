@@ -41,7 +41,7 @@ function EditGame() {
 		game.genres = gameGenres;
 		game.themes = gameThemes;
 
-		fetch("/api/games", {
+		fetch("/api/games?type=edit", {
 			method: "put",
 			body: JSON.stringify({game}),
 			headers: {'Content-type': 'application/json; charset=UTF-8'}

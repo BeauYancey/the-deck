@@ -55,6 +55,10 @@ async function createEmp(lastName, firstName, email, password, role) {
   return employee;
 }
 
+async function addRatedGame(user_id, game_id) {
+  await empCollection.updateOne({_id: user_id}, {$push : {rated: new ObjectId(game_id)}})
+}
+
 // Add a new game to the database if there is not already a game with the same name
 async function addGame(game) {
   await gameCollection.updateOne({name: game.name}, {$setOnInsert: game}, {upsert: true})
@@ -114,6 +118,7 @@ module.exports = {
   getEmpByToken,
   createEmp,
   getAllEmps,
+  addRatedGame,
   removeUser,
   addGame,
   getGames,

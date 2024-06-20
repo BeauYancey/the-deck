@@ -77,7 +77,7 @@ secureApiRouter.get('/user/:email', async (req, res) => {
   const user = await DB.getEmp(req.params.email);
   if (user) {
     const token = req?.cookies.token;
-    res.send({ first: user.firstName, last: user.lastName, email: user.email, role: user.role, authenticated: token === user.token });
+    res.send({ first: user.firstName, last: user.lastName, email: user.email, role: user.role, authenticated: token === user.token, rated: user.rated });
   }
   else {
     res.status(404).send({ msg: 'Unknown' });
@@ -131,12 +131,30 @@ secureApiRouter.post('/games', async (req, res) => {
 
 secureApiRouter.put('/games', async (req, res) => {
   const {_id, ...game} = req.body.game;
+  const query = req.query;
+  const user = await DB.getEmpByToken(req.cookies[authCookieName]);
+  if (query.type === 'rate') {
+    if (user.rated.includes(_id)) {
+      res.status(403).send({msg: 'You have already rated this game'});
+      return
+    }
+    else {
+      DB.addRatedGame(user._id, _id)
+    }
+  }
   const numAffected = await DB.updateGame(_id, game);
   if (numAffected > 1) {
     res.status(400).send({msg: `Bad request, update affected ${numAffected} documents`});
+    return;
   }
   const games = await DB.getGames();
   res.send(games)
+})
+
+secureApiRouter.get('/whoami', async (req, res) => {
+  const user = await DB.getEmpByToken(req.cookies[authCookieName]);
+  const toSend = {name: user.firstName, role: user.role, rated: user.rated}
+  res.send(toSend);
 })
 
 // Delete a game at the /api/games endpoint
