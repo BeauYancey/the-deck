@@ -12,9 +12,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   --grey: #EDEAEB;
-  --yellow: #FFE733;
-  --orange: #FF773D;
-  --purple: #290565;
+  --green: #77AD78;
+  --orange: #E57A44;
+  --purple: #532747;
 
 }
 
@@ -400,6 +400,10 @@ textarea::placeholder {
   display: flex;
   flex-direction: column;
   height: calc(100vh - 7em);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  background: var(--green) !important;
 }
 
 

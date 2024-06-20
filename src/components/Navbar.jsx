@@ -22,7 +22,7 @@ function Navbar() {
         <div className="nav-links">
           <Link to="/games" className="btn">Games</Link>
           <Link to="/menu" className="btn">Food</Link>
-          <Link to="/about" className="btn">Reservations</Link>
+          <Link to="/reservations" className="btn">Reservations</Link>
           <Link to="/auth" className="btn">Employees</Link>
         </div>
         <button className='btn menu-btn' onClick={() => toggleMenu()}>More</button>
@@ -32,7 +32,7 @@ function Navbar() {
         <div className="nav-links">
           <Link to="/games" className="btn">Games</Link>
           <Link to="/menu" className="btn">Food</Link>
-          <Link to="/about" className="btn">Reservations</Link>
+          <Link to="/reservations" className="btn">Reservations</Link>
           <Link to="/auth" className="btn">Employees</Link>
         </div>
       </div>
