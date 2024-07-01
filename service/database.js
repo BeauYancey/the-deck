@@ -112,6 +112,12 @@ async function removeEvent(event) {
   await eventCollection.deleteOne(event)
 }
 
+async function cleanupEvents() {
+  const oneWeekAgo = new Date();
+  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+  await eventCollection.deleteMany({"date": {$lt: oneWeekAgo}})
+}
+
 
 module.exports = {
   getEmp,

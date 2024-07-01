@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Multiselect from "../../components/Multiselect";
-const allGenres = require("../../tags.json").genres;
-const allThemes = require("../../tags.json").themes;
+import Multiselect from "../../../components/Multiselect";
+const allGenres = require("../../../tags.json").genres;
+const allThemes = require("../../../tags.json").themes;
 
 function NewGame() {
   const [name, setName] = useState('');

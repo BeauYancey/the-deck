@@ -48,13 +48,13 @@ apiRouter.get('/food', async (req, res) => {
   const food = await DB.getFood();
   res.setHeader('Content-Type', 'application/json');
   res.send(food);
-})
+});
 
 apiRouter.get('/events', async (req, res) => {
   const events = await DB.getEvents();
   res.setHeader('Content-Type', 'application/json');
   res.send(events);
-})
+});
 
 // Create a secure api router that uses the /api path
 const secureApiRouter = express.Router();
@@ -101,7 +101,7 @@ secureApiRouter.delete('/user', async (req, res) => {
   else {
     res.status(401).send({ msg: 'Unauthorized' })
   }
-})
+});
 
 // Delete Auth token if stored in a cookie
 secureApiRouter.delete('/auth/logout', (_req, res) => {
@@ -149,13 +149,13 @@ secureApiRouter.put('/games', async (req, res) => {
   }
   const games = await DB.getGames();
   res.send(games)
-})
+});
 
 secureApiRouter.get('/whoami', async (req, res) => {
   const user = await DB.getEmpByToken(req.cookies[authCookieName]);
   const toSend = {name: user.firstName, role: user.role, rated: user.rated}
   res.send(toSend);
-})
+});
 
 // Delete a game at the /api/games endpoint
 secureApiRouter.delete('/games', async (req, res) => {
@@ -183,9 +183,9 @@ secureApiRouter.put('/food', async (req, res) => {
     const allFood = await DB.getFood();
     res.send(allFood)
   }
-})
+});
 
-//Delete a food item atthe /api/food endpoint
+//Delete a food item at the /api/food endpoint
 secureApiRouter.delete('/food', async (req, res) => {
   const food = req.body;
   await DB.removeFood(food);
@@ -199,7 +199,14 @@ secureApiRouter.post('/events', async (req, res) => {
   await DB.createEvent(event);
   const foods = await DB.getEvents();
   res.send(foods);
-})
+});
+
+secureApiRouter.delete('/events', async (req, res) => {
+  const event = req.body;
+  await DB.removeEvent(event);
+  const events = await DB.getEvents();
+  res.send(events);
+});
 
 // Default error handler
 app.use(function (err, req, res, next) {

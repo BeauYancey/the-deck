@@ -1,5 +1,5 @@
 import { useState } from "react"
-import SelectImg from "../../components/SelectImg";
+import SelectImg from "../../../components/SelectImg";
 
 function NewEvent() {
 
@@ -26,7 +26,7 @@ function NewEvent() {
 			method: 'post',
 			body: JSON.stringify(
         {name: name, 
-        image: img.link, 
+        img: img.link, 
         description: description, 
         date: date}
       ),

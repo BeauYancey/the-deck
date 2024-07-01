@@ -1,16 +1,17 @@
 import { Routes, Route, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Accordion from 'react-bootstrap/Accordion';
-import NewGame from "./NewGame";
-import NewFood from "./NewFood";
-import CreateUser from "./CreateUser";
-import DeleteGame from "./DeleteGame";
-import DeleteFood from "./DeleteFood";
-import DeleteUser from "./DeleteUser";
-import RateGame from "./RateGame";
-import EditGame from "./EditGame";
-import EditFood from "./EditFood";
-import NewEvent from "./NewEvent";
+import NewGame from "./games/NewGame";
+import NewFood from "./food/NewFood";
+import CreateUser from "./users/CreateUser";
+import DeleteGame from "./games/DeleteGame";
+import DeleteFood from "./food/DeleteFood";
+import DeleteUser from "./users/DeleteUser";
+import RateGame from "./games/RateGame";
+import EditGame from "./games/EditGame";
+import EditFood from "./food/EditFood";
+import NewEvent from "./events/NewEvent";
+import DeleteEvent from "./events/DeleteEvent";
 
 function Authenticated(props) {
 
@@ -65,7 +66,8 @@ function Authenticated(props) {
             <Accordion.Header>Events</Accordion.Header>
             <Accordion.Body>
               <div style={{display: 'flex', flexDirection: 'column'}}>
-                <Link to="new-event" element={<NewEvent />}>New Event</Link>
+                <Link to="new-event">New Event</Link>
+                <Link to="delete-event">Delete Event</Link>
               </div>
             </Accordion.Body>
           </Accordion.Item>
@@ -98,6 +100,7 @@ function Authenticated(props) {
         <Route path="edit-game" element={<EditGame />} />
         <Route path="edit-food" element={<EditFood />} />
         <Route path="new-event" element={<NewEvent />} />
+        <Route path="delete-event" element={<DeleteEvent />} />
         <Route path="*" element={<CreateUser/>}/>
       </Routes>
     </div>

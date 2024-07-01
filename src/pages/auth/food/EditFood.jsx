@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import Multiselect from "../../components/Multiselect";
-const allOptions = require("../../tags.json").food;
+import Multiselect from "../../../components/Multiselect";
+const allOptions = require("../../../tags.json").food;
 
 function EditFood() {
 	const [allFoods, setAllFoods] = useState([]);
