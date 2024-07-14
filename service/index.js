@@ -4,7 +4,7 @@ const express = require('express');
 const app = express();
 const DB = require('./database.js');
 
-const authCookieName = "token";
+const authCookieName = "deck-token";
 
 // Use port 8080 for the backend unless specified on the command line
 const port = process.argv.length > 2 ? process.argv[2] : 8080;
@@ -213,9 +213,9 @@ app.use(function (err, req, res, next) {
   res.status(500).send({ type: err.name, msg: err.message });
 });
 
-// 404 error if the path is unknown
+// Return index.html if the path is unknown
 app.use((_req, res) => {
-  res.status(404).send({msg: "page not found"});
+  res.sendFile('index.html', { root: 'build' });
 });
 
 function setAuthCookie(res, authToken) {
