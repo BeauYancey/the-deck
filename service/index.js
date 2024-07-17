@@ -76,7 +76,7 @@ secureApiRouter.use(async (req, res, next) => {
 secureApiRouter.get('/user/:email', async (req, res) => {
   const user = await DB.getEmp(req.params.email);
   if (user) {
-    const token = req?.cookies.token;
+    const token = req?.cookies[authCookieName];
     res.send({ first: user.firstName, last: user.lastName, email: user.email, role: user.role, authenticated: token === user.token, rated: user.rated });
   }
   else {
