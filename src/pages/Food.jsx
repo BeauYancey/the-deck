@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import FoodCard from "../components/FoodCard";
 import Dropdown from "../components/Dropdown";
+import { Helmet } from "react-helmet";
 const allOptions = require('../tags.json').food
 
 function Food() {
@@ -48,6 +49,10 @@ function Food() {
 
   return (
 		<div className='grid-container' style={{marginTop: '2em'}}>
+      <Helmet>
+        <title>The Deck | Menu</title>
+        <meta name="description" content="The Deck has a unique menu crafted designed to raise your eyebrows and your expectations. We serve snacks from pretzel bites to caprese salad, and drinks from caramel root beer to strawberry milk."/>
+      </Helmet>
       <div className="filter-selector">
         <Dropdown name="Options" filterTags={options} allTags={allOptions} addRemoveTag={addRemoveTag} />
         <div className='btn btn-primary' onClick={() => setFilter(Array.from(options))}>Apply Filters</div>

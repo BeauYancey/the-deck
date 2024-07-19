@@ -1,20 +1,23 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Games from './pages/Games';
 import Food from './pages/Food';
 import Login from './pages/auth/Login';
+import { Helmet } from 'react-helmet';
 
 function App() {
 
   const [email, setEmail] = useState(localStorage.getItem('user') || '');
   const [authState, setAuthState] = useState(false);
-  useEffect(() => {
-    fetch(`/api/user/${email}`)
-    .then(res => res.json())
-    .then(data => setAuthState(data.authenticated));
-  }, [email])
+  // This shouldn't be necessary. Leaving it commented in case removing it does cause issues.
+  // useEffect(() => {
+  //   fetch(`/api/user/${email}`)
+  //   .then(res => res.json())
+  //   .then(data => setAuthState(data.authenticated))
+  //   .catch(err => setAuthState(false));
+  // }, [email])
 
   return (
     <BrowserRouter>
@@ -45,6 +48,9 @@ function App() {
 function NotFound() {
   return (
     <main style={{textAlign: 'center', paddingTop: '6em'}}>
+      <Helmet>
+        <title>Not Found</title>
+      </Helmet>
       <h2>404: Page not found</h2>
       <p>Try using the links at the top of the page to navigate the site.</p>
     </main>

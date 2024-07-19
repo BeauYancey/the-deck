@@ -12,6 +12,7 @@ import EditGame from "./games/EditGame";
 import EditFood from "./food/EditFood";
 import NewEvent from "./events/NewEvent";
 import DeleteEvent from "./events/DeleteEvent";
+import { Helmet } from "react-helmet";
 
 function Authenticated(props) {
 
@@ -37,6 +38,9 @@ function Authenticated(props) {
 
   return (
     <div className="authenticated">
+      <Helmet>
+        <title>The Deck | {user.role === "admin" ? "Admin" : "Employee"}</title>
+      </Helmet>
       <div className="dock">
         <Accordion>
           <Accordion.Item eventKey='0'>

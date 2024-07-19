@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import GameCard from '../components/GameCard';
 import GameInfo from '../components/GameInfo';
 import Dropdown from '../components/Dropdown';
+import { Helmet } from 'react-helmet';
 const allGenres = require('../tags.json').genres;
 const allThemes = require('../tags.json').themes;
 
@@ -81,6 +82,10 @@ function Games() {
 
   return (
 		<div className='grid-container'>
+      <Helmet>
+        <title>The Deck | Games</title>
+        <meta name="description" content="The Deck boasts a large selection of games for families, friends, couples, and kids. There's no better place to find new games, rediscover old favorites, or just stick to what you love."/>
+      </Helmet>
       <div className="filter-selector">
         <div className='input-group' style={{width: "12em"}}>
           <span className='input-group-text'>No. of Players</span>
