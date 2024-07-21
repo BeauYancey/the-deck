@@ -330,6 +330,7 @@ textarea::placeholder {
   width: 12em;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   text-align: center;
   margin-right: 2em;;
   margin-top: 0;

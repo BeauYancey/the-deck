@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet";
 import Authenticated from "./Authenticated"; 
 import Unauthenticated from "./Unauthenticated";
  
- function Login({email, authState, onAuthChange}) {
+ function Login({username, authState, onAuthChange}) {
   return (
     <div className="login">
       <Helmet>
@@ -12,15 +12,15 @@ import Unauthenticated from "./Unauthenticated";
       {authState === true ? 
         (
         <Authenticated 
-          email={email} 
-          onLogout={() => onAuthChange(email, false)} 
+          username={username} 
+          onLogout={() => onAuthChange(username, false)} 
         />
       ) :
       (
         <Unauthenticated 
-          email={email}
-          onLogin={(loginEmail) => {
-            onAuthChange(loginEmail, true)
+          username={username}
+          onLogin={(loginUsername) => {
+            onAuthChange(loginUsername, true)
           }}
         />
       )}

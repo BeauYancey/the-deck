@@ -31,10 +31,10 @@ function Authenticated(props) {
 
   const [user, setUser] = useState({})
   useEffect(() => {
-    fetch(`/api/user/${props.email}`)
+    fetch(`/api/user/${props.username}`)
     .then(res => res.json())
     .then(data => setUser(data))
-  }, [props.email])
+  }, [props.username])
 
   return (
     <div className="authenticated">

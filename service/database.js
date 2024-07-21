@@ -21,8 +21,8 @@ const eventCollection = db.collection("Events");
 });
 
 // Get an employee from the database by their email
-async function getEmp(email) {
-  return await empCollection.findOne({ email: email });
+async function getEmp(username) {
+  return await empCollection.findOne({ username: username });
 }
 // Get an employee from the database by their auth cookie
 async function getEmpByToken(token) {
@@ -38,17 +38,18 @@ async function removeUser(user) {
 }
   
 // Add a new employee to the database
-async function createEmp(lastName, firstName, email, password, role) {
+async function createEmp(name, username, email, password, role) {
   // Hash the password before we insert it into the database
   const passwordHash = await bcrypt.hash(password, 10);
   
   const employee = {
-    lastName: lastName,
-    firstName: firstName,
+    name: name,
+    username: username,
     email: email,
     password: passwordHash,
     role: role,
     token: uuid.v4(),
+    rated: []
   };
   await empCollection.insertOne(employee);
 

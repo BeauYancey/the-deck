@@ -1,5 +1,5 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Games from './pages/Games';
@@ -9,15 +9,14 @@ import { Helmet } from 'react-helmet';
 
 function App() {
 
-  const [email, setEmail] = useState(localStorage.getItem('user') || '');
+  const [username, setUsername] = useState(localStorage.getItem('user') || '');
   const [authState, setAuthState] = useState(false);
-  // This shouldn't be necessary. Leaving it commented in case removing it does cause issues.
-  // useEffect(() => {
-  //   fetch(`/api/user/${email}`)
-  //   .then(res => res.json())
-  //   .then(data => setAuthState(data.authenticated))
-  //   .catch(err => setAuthState(false));
-  // }, [email])
+  useEffect(() => {
+    fetch(`/api/user/${username}`)
+    .then(res => res.json())
+    .then(data => setAuthState(data.authenticated))
+    .catch(err => setAuthState(false));
+  }, [username])
 
   return (
     <BrowserRouter>
@@ -30,11 +29,11 @@ function App() {
           {/* <Route path='/about' element={<About />} /> */}
           <Route path='/auth/*' element={
             <Login 
-              email={email} 
+              username={username} 
               authState={authState} 
-              onAuthChange={(email, authState) => {
+              onAuthChange={(username, authState) => {
                 setAuthState(authState);
-                setEmail(email);
+                setUsername(username);
               }}
             />}
           />

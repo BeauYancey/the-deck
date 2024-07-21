@@ -20,11 +20,11 @@ app.use(`/api`, apiRouter);
 
 // Get Auth token for the provided credentials
 apiRouter.post('/auth/login', async (req, res) => {
-  const user = await DB.getEmp(req.body.email);
+  const user = await DB.getEmp(req.body.username);
   if (user) {
     if (await bcrypt.compare(req.body.password, user.password)) {
       setAuthCookie(res, user.token)
-      res.send({ id: user.email });
+      res.send({ id: user.username });
       return;
     }
     else {
@@ -72,12 +72,12 @@ secureApiRouter.use(async (req, res, next) => {
   }
 });
 
-// Get employee information from the /api/user/:email path
-secureApiRouter.get('/user/:email', async (req, res) => {
-  const user = await DB.getEmp(req.params.email);
+// Get employee information from the /api/user/:username path
+secureApiRouter.get('/user/:username', async (req, res) => {
+  const user = await DB.getEmp(req.params.username);
   if (user) {
     const token = req?.cookies[authCookieName];
-    res.send({ first: user.firstName, last: user.lastName, email: user.email, role: user.role, authenticated: token === user.token, rated: user.rated });
+    res.send({ name: user.name, username: user.username, email: user.email, role: user.role, authenticated: token === user.token, rated: user.rated });
   }
   else {
     res.status(404).send({ msg: 'Unknown' });
@@ -86,16 +86,16 @@ secureApiRouter.get('/user/:email', async (req, res) => {
 
 secureApiRouter.get('/user', async (req, res) => {
   const allUsers = await DB.getAllEmps();
-  const info = allUsers.map((user) => ({last: user.lastName, first: user.firstName, email: user.email}));
+  const info = allUsers.map((user) => ({name: user.name, username: user.username, email: user.email}));
   res.send(info)
 });
 
 secureApiRouter.delete('/user', async (req, res) => {
-  const user = await DB.getEmp(req.body.email);
+  const user = await DB.getEmp(req.body.username);
   if (user.role !== "super-admin") {
     await DB.removeUser(user);
     const allUsers = await DB.getAllEmps();
-    const info = allUsers.map((user) => ({last: user.lastName, first: user.firstName, email: user.email}));
+    const info = allUsers.map((user) => ({name: user.name, username: user.username, email: user.email}));
     res.send(info)
   }
   else {
@@ -111,12 +111,12 @@ secureApiRouter.delete('/auth/logout', (_req, res) => {
 
 // Create a new user at the /api/auth/create endpoint
 secureApiRouter.post('/auth/create', async (req, res) => {
-  if (await DB.getEmp(req.body.email)) {
+  if (await DB.getEmp(req.body.username)) {
     res.status(409).send({ msg: 'Existing user' });
   } else {
-    const user = await DB.createEmp(req.body.last, req.body.first, req.body.email, req.body.password, req.body.role);
+    const user = await DB.createEmp(req.body.name, req.body.username, req.body.email, req.body.password, req.body.role);
     res.send({
-      id: user.email,
+      id: user.username,
     });
   }
 });
@@ -149,12 +149,6 @@ secureApiRouter.put('/games', async (req, res) => {
   }
   const games = await DB.getGames();
   res.send(games)
-});
-
-secureApiRouter.get('/whoami', async (req, res) => {
-  const user = await DB.getEmpByToken(req.cookies[authCookieName]);
-  const toSend = {name: user.firstName, role: user.role, rated: user.rated}
-  res.send(toSend);
 });
 
 // Delete a game at the /api/games endpoint

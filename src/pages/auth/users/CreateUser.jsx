@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 function CreateUser() {
-  const [lastName, setLastName] = useState('');
-  const [firstName, setFirstName] = useState('');
+  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('');
@@ -18,7 +18,7 @@ function CreateUser() {
   async function createUser() {
     const response = await fetch(`/api/auth/create`, {
       method: 'post',
-      body: JSON.stringify({last: lastName, first: firstName, email: email, password: password, role: role}),
+      body: JSON.stringify({name: name, username: username, email: email, password: password, role: role, rated: []}),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
       },
@@ -36,20 +36,20 @@ function CreateUser() {
   return(
     <div className="create-user">
       <div className='input-group mb-3'>
-        <span className='input-group-text'>Last Name</span>
+        <span className='input-group-text'>Name</span>
         <input
           className='form-control'
           type='text'
-          onChange={(e) => setLastName(e.target.value)}
+          onChange={(e) => setName(e.target.value)}
           placeholder='Smith'
         />
       </div>
       <div className='input-group mb-3'>
-        <span className='input-group-text'>First Name</span>
+        <span className='input-group-text'>Username</span>
         <input
           className='form-control'
           type='text'
-          onChange={(e) => setFirstName(e.target.value)}
+          onChange={(e) => setUsername(e.target.value)}
           placeholder='John'
         />
       </div>

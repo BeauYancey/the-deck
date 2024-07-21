@@ -5,19 +5,19 @@ function Unauthenticated(props) {
 
   async function loginUser() {
 
-    const email = document.getElementById("email").value;
+    const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
 
     const response = await fetch(`/api/auth/login`, {
       method: 'post',
-      body: JSON.stringify({email: email, password: password}),
+      body: JSON.stringify({username: username, password: password}),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
       },
     });
     if (response?.status === 200) {
-      localStorage.setItem('user', email);
-      props.onLogin(email);
+      localStorage.setItem('user', username);
+      props.onLogin(username);
       setDisplayError(false);
     } else {
       const body = await response.json();
@@ -39,12 +39,11 @@ function Unauthenticated(props) {
   return(
     <div className="unauthenticated">
       <div className='input-group mb-3'>
-        <span className='input-group-text'>Email</span>
+        <span className='input-group-text'>Username</span>
         <input
           className='form-control'
           type='text'
-          id='email'
-          placeholder='example@email.com'
+          id='username'
         />
       </div>
       <div className='input-group mb-3'>
@@ -53,7 +52,6 @@ function Unauthenticated(props) {
           className='form-control'
           type='password'
           id='password'
-          placeholder='********'
         />
       </div>
       {displayError && 
