@@ -12,6 +12,7 @@ import EditGame from "./games/EditGame";
 import EditFood from "./food/EditFood";
 import NewEvent from "./events/NewEvent";
 import DeleteEvent from "./events/DeleteEvent";
+import Profile from "./Profile";
 import { Helmet } from "react-helmet";
 
 function Authenticated(props) {
@@ -89,7 +90,10 @@ function Authenticated(props) {
           )}
         </Accordion>
 
-        <div className="btn btn-primary" style={{margin: "1em"}} onClick={() => logout()}>Log Out</div>
+        <div style={{display: 'flex', flexDirection: 'column', gap: '1em'}}>
+          <div className="btn btn-primary"><Link to='profile'>Profile</Link></div>
+          <div className="btn btn-primary"onClick={() => logout()}>Log Out</div>
+        </div>
       </div>
       
       <Routes>
@@ -105,6 +109,7 @@ function Authenticated(props) {
         <Route path="edit-food" element={<EditFood />} />
         <Route path="new-event" element={<NewEvent />} />
         <Route path="delete-event" element={<DeleteEvent />} />
+        <Route path="profile" element={<Profile user={user} setUser={setUser}/>} />
         <Route path="*" element={<CreateUser/>}/>
       </Routes>
     </div>
