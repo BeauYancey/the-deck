@@ -56,6 +56,15 @@ async function createEmp(name, username, email, password, role) {
   return employee;
 }
 
+async function editEmp(id, changes) {
+  if (changes.password) {
+    const passwordHash = await bcrypt.hash(changes.password, 10)
+    changes.password = passwordHash
+  }
+  const res = await empCollection.updateOne({_id: id}, {$set: changes})
+  return res.modifiedCount;
+}
+
 async function addRatedGame(user_id, game_id) {
   await empCollection.updateOne({_id: user_id}, {$push : {rated: new ObjectId(game_id)}})
 }
@@ -125,6 +134,7 @@ module.exports = {
   getEmpByToken,
   createEmp,
   getAllEmps,
+  editEmp,
   addRatedGame,
   removeUser,
   addGame,

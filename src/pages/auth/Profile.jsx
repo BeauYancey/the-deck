@@ -25,20 +25,27 @@ function Profile({user, setUser}) {
 		document.querySelectorAll('input').forEach(el => el.readOnly = true)
 		setEditMode(false)
 
+		let info = {}
+		let query = ''
 		// only include password if it's not ''
-		const info = {
-			username: username,
-			email: email,
+		if (password === '') {
+			info = {
+				username: username,
+				email: email,
+			}
 		}
-		if (password !== '') {
-			Object.defineProperties(info, {
-				newPassword: {value: password},
-				password: {value: oldPassword}
-			})
+		else {
+			info = {
+				username: username,
+				email: email,
+				password: password,
+				oldPassword: oldPassword
+			}
+			query = '?password=true'
 		}
 		console.log(info)
 
-		fetch(`/api/user/${user.username}`, {
+		fetch(`/api/user/${user.username + query}`, {
 			method: "put",
 			body: JSON.stringify({info}),
 			headers: {'Content-type': 'application/json; charset=UTF-8'}
@@ -86,7 +93,7 @@ function Profile({user, setUser}) {
         />
       </div>
 			<div className='input-group mb-3'>
-        <span className='input-group-text'>Password</span>
+        <span className='input-group-text'>New Password</span>
         <input
           className='form-control'
 					style={{borderRadius: '0'}}

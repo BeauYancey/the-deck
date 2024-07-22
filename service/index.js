@@ -84,6 +84,34 @@ secureApiRouter.get('/user/:username', async (req, res) => {
   }
 });
 
+secureApiRouter.put('/user/:username', async (req, res) => {
+  const info = req.body.info
+  const toChange = await DB.getEmp(req.params.username);
+  const editor = await DB.getEmpByToken(req.cookies[authCookieName])
+  let password = true // if the user is not updating their password, don't require their old password
+  if (req.query.password == 'true') {
+    password = await bcrypt.compare(info.oldPassword, toChange.password)
+  }
+  if (password && toChange.username === editor.username) { // user is updating their own information
+    const {oldPassword, ...changes} = info
+    modifiedCount = await DB.editEmp(toChange._id, changes)
+    if (modifiedCount !== 1) { // Bad result, nothing changed
+      res.status(500).send({msg: `${modifiedCount} users' data modified`})
+    }
+    else {
+      const changed = await DB.getEmp(req.params.username);
+      res.send(changed);
+    }
+  } 
+  else if (editor.role === 'admin') { // admin can promote employees to admin and vice versa
+    // include logic for promoting employees to admins and vice versa
+    // make sure that's the only thing admin's can do
+  }
+  else {
+    res.status(401).send({msg: 'Unauthorized'})
+  }
+})
+
 secureApiRouter.get('/user', async (req, res) => {
   const allUsers = await DB.getAllEmps();
   const info = allUsers.map((user) => ({name: user.name, username: user.username, email: user.email}));
@@ -169,7 +197,6 @@ secureApiRouter.post('/food', async (req, res) => {
 
 secureApiRouter.put('/food', async (req, res) => {
   const {_id, ...food} = req.body.food;
-  console.log(food)
   const numAffected = await DB.updateFood(_id, food);
   if (numAffected > 1) {
     res.status(400).send({msg: `Bad request, update affected ${numAffected} documents`});
