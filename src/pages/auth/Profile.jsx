@@ -26,8 +26,11 @@ function Profile({user, setUser}) {
 		setEditMode(false)
 
 		let info = {}
-		let query = ''
+		let query = '?'
 		// only include password if it's not ''
+		if (username !== user.username) {
+			query += 'username=true&'
+		}
 		if (password === '') {
 			info = {
 				username: username,
@@ -41,16 +44,22 @@ function Profile({user, setUser}) {
 				password: password,
 				oldPassword: oldPassword
 			}
-			query = '?password=true'
+			query += 'password=true&'
 		}
-		console.log(info)
 
 		fetch(`/api/user/${user.username + query}`, {
 			method: "put",
 			body: JSON.stringify({info}),
 			headers: {'Content-type': 'application/json; charset=UTF-8'}
 		})
-		.then(res => res.json())
+		.then(res => {
+			if (res.ok) {
+				return res.json()
+			}
+			else {
+				throw new Error(`HTTP status code: ${res.status}`)
+			}
+		})
 		.then(data => {
 			setUser(data)
 			setError(false)

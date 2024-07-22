@@ -92,6 +92,10 @@ secureApiRouter.put('/user/:username', async (req, res) => {
   if (req.query.password == 'true') {
     password = await bcrypt.compare(info.oldPassword, toChange.password)
   }
+  if (req.query.username == 'true' && await DB.getEmp(info.username)) {
+    res.status(409).send({ msg: 'Existing user' });
+    return
+  }
   if (password && toChange.username === editor.username) { // user is updating their own information
     const {oldPassword, ...changes} = info
     modifiedCount = await DB.editEmp(toChange._id, changes)
