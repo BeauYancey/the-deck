@@ -97,7 +97,7 @@ function Authenticated(props) {
       </div>
       
       <Routes>
-        <Route path="/" exact element={<CreateUser/>} />
+        <Route path="/" exact element={<Profile user={user} setUser={setUser}/>} />
         <Route path="add-user" element={<CreateUser />} />
         <Route path="add-game" element={<NewGame />} />
         <Route path="add-food" element={<NewFood />} />
@@ -110,7 +110,7 @@ function Authenticated(props) {
         <Route path="new-event" element={<NewEvent />} />
         <Route path="delete-event" element={<DeleteEvent />} />
         <Route path="profile" element={<Profile user={user} setUser={setUser}/>} />
-        <Route path="*" element={<CreateUser/>}/>
+        <Route path="*" element={<Profile user={user} setUser={setUser}/>}/>
       </Routes>
     </div>
   )
