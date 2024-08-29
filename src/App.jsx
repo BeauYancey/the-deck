@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Games from './pages/Games';
 import Food from './pages/Food';
 import Login from './pages/auth/Login';
+import Setup from './pages/auth/Setup'
 import { Helmet } from 'react-helmet';
 
 function App() {
@@ -36,6 +37,9 @@ function App() {
                 setUsername(username);
               }}
             />}
+          />
+          <Route path='/setup/:id' element={
+            <Setup setUsername={setUsername}/>} 
           />
           <Route path="*" element={<NotFound />} />
         </Routes>

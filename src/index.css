@@ -246,7 +246,7 @@ code {
   margin-top: 2em;
 }
 
-.unauthenticated {
+.unauthenticated, .setup {
   padding: 1em;
   padding-top: 4em;
   display: flex;

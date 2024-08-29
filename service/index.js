@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const express = require('express');
 const app = express();
 const DB = require('./database.js');
+const { Db } = require('mongodb');
 
 const authCookieName = "deck-token";
 
@@ -55,6 +56,29 @@ apiRouter.get('/events', async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   res.send(events);
 });
+
+apiRouter.get('/setup/:token', async (req, res) => {
+  const newEmp = await DB.getEmpByToken(req.params.token)
+  if (newEmp && newEmp.password === '') {
+    res.send({name: newEmp.name, id: newEmp._id})
+  }
+  else {
+    res.status(400).send({ msg: 'Bad Request' })
+  }
+})
+
+apiRouter.post('/setup/:token', async (req, res) => {
+  const changes = req.body
+  const emp = await DB.getEmpByToken(req.params.token)
+  const modifiedCount = await DB.editEmp(emp._id, changes)
+  if (modifiedCount === 1) {
+    setAuthCookie(res, req.params.token)
+    res.redirect('/auth')
+  }
+  else {
+    res.status(500).send()
+  }
+})
 
 // Create a secure api router that uses the /api path
 const secureApiRouter = express.Router();
