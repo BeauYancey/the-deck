@@ -1,14 +1,32 @@
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcrypt');
 const express = require('express');
+const nodemailer = require('nodemailer')
 const app = express();
 const DB = require('./database.js');
-const { Db } = require('mongodb');
+const {mail: mailConfig} = require('./config')
 
 const authCookieName = "deck-token";
 
 // Use port 8080 for the backend unless specified on the command line
 const port = process.argv.length > 2 ? process.argv[2] : 8080;
+
+const transport = {
+  host: 'smtp.gmail.com',
+  auth: {
+    user: mailConfig.USER,
+    pass: mailConfig.PASS
+  }
+}
+
+const mailTransporter = nodemailer.createTransport(transport)
+mailTransporter.verify((error, success) => {
+  if (error) {
+    console.log(error);
+  } else {
+    console.log('All works fine, congratz!');
+  }
+});
 
 app.use(express.json());
 app.use(cookieParser());
@@ -170,9 +188,14 @@ secureApiRouter.post('/auth/create', async (req, res) => {
   if (await DB.getEmp(req.body.username)) {
     res.status(409).send({ msg: 'Existing user' });
   } else {
-    const user = await DB.createEmp(req.body.name, req.body.username, req.body.email, req.body.password, req.body.role);
+    const user = await DB.createEmp(req.body.name, req.body.email, req.body.role);
+    const sendSuccess = sendWelcome(user)
+    if (!sendSuccess) {
+      return res.status(500).send({msg: 'Unable to send mail'})
+    }
+
     res.send({
-      id: user.username,
+      id: user.token,
     });
   }
 });
@@ -274,6 +297,32 @@ function setAuthCookie(res, authToken) {
     sameSite: 'strict',
     maxAge: 2*60*60*1000 // two hours
   });
+}
+
+function sendWelcome(recipient) {
+  const link = 'https://thedeck.yanceydev.com/setup/' + recipient.token
+  const mail = {
+    from: mailConfig.USER,
+    to: recipient.email,
+    subject: 'Welcome to The Deck',
+    html: `<h3>Hi ${recipient.name.split(' ')[0]}! Let's set up your account.</h3>
+            <p>Click on <a href="${link}">this link<a> or go to ${link} to create a username and password for your account at The Deck.</p>
+            <p>Please report any issues setting up your account to your manager or by responding to this email.</p>`
+  }
+
+  const sendFailure = mailTransporter.sendMail(mail, (err, data) => {
+    if (err) {
+      console.log(err)
+      return true
+    }
+  }) 
+
+  if (sendFailure) {
+    return false
+  }
+  else {
+    return true
+  }
 }
 
 const httpService = app.listen(port, () => {

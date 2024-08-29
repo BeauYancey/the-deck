@@ -7,6 +7,7 @@
 service/node_modules
 service/dbConfig.json
 src/gameData.json
+service/config.js
 
 # testing
 /coverage

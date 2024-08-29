@@ -1,7 +1,7 @@
 const { MongoClient, ObjectId } = require('mongodb');
 const bcrypt = require('bcrypt');
 const uuid = require('uuid');
-const config = require('./dbConfig.json');
+const {db: config} = require('./config')
 
 const url = `mongodb+srv://${config.username}:${config.password}@cluster0.x6lnqed.mongodb.net`;
 const client = new MongoClient(url);
@@ -38,15 +38,12 @@ async function removeUser(user) {
 }
   
 // Add a new employee to the database
-async function createEmp(name, username, email, password, role) {
-  // Hash the password before we insert it into the database
-  const passwordHash = await bcrypt.hash(password, 10);
-  
+async function createEmp(name, email, role) {
   const employee = {
     name: name,
-    username: username,
+    username: '',
     email: email,
-    password: passwordHash,
+    password: '',
     role: role,
     token: uuid.v4(),
     rated: []

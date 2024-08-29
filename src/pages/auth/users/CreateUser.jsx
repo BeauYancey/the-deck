@@ -2,9 +2,7 @@ import { useState } from "react";
 
 function CreateUser() {
   const [name, setName] = useState('');
-  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [role, setRole] = useState('');
   const [displayError, setDisplayError] = useState(false);
 
@@ -18,7 +16,7 @@ function CreateUser() {
   async function createUser() {
     const response = await fetch(`/api/auth/create`, {
       method: 'post',
-      body: JSON.stringify({name: name, username: username, email: email, password: password, role: role, rated: []}),
+      body: JSON.stringify({name: name, email: email, role: role, rated: []}),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
       },
@@ -44,15 +42,6 @@ function CreateUser() {
           placeholder='Smith'
         />
       </div>
-      <div className='input-group mb-3'>
-        <span className='input-group-text'>Username</span>
-        <input
-          className='form-control'
-          type='text'
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder='John'
-        />
-      </div>
       <div className='input-group mb-3' style={{width: "25em"}}>
         <span className='input-group-text'>Email</span>
         <input
@@ -61,15 +50,6 @@ function CreateUser() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder='example@email.com'
-        />
-      </div>
-      <div className='input-group mb-3'>
-        <span className='input-group-text'>Password</span>
-        <input
-          className='form-control'
-          type='password'
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder='********'
         />
       </div>
       <div className='input-group mb-3'>
